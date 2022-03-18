@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PageEdit from './page/pagetEdit';
 import PostEdit from './post/postEdit';
-import Home from './home/pagetEdit';
+import Home from './home/Home';
 import Media from './media/controlMedia';
 import CategoryEdit from './category/CategoryEdit';
 import SetupPage from './setup_Page/SetupPage';
@@ -25,8 +25,7 @@ class Index extends Component {
         this.state = {
             activeItem:"posts",
             permission_type:"null",
-            notify:0
-            // permission_type:"administrator"
+            notify:0,
         }
     }
    async componentDidMount(){
@@ -80,7 +79,8 @@ class Index extends Component {
             }
     }
     render() {
-        const { activeItem,permission_type,notify,coun_contact_now } =  this.state;
+        let { activeItem,permission_type,notify,coun_contact_now } =  this.state;
+        permission_type='editor';//[todo]
         let permission_active_post=this.set_permission(["administrator","editor",'author','contributor'],permission_type);
         let permission_active_category=this.set_permission(["administrator","editor"],permission_type);
         let permission_active_page=this.set_permission(["administrator","editor"],permission_type);
@@ -89,6 +89,7 @@ class Index extends Component {
         let permission_active_media=this.set_permission(["administrator","editor",'author','contributor'],permission_type);
         let permission_active_contact=this.set_permission(["administrator","editor",'author'],permission_type);
         // let permission_active_post=this.set_permission(["administrator","editor",'author','contributor','subscriber']);
+        
         return (
             <Router>
                 

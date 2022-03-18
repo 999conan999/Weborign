@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 import {
     get_all_category,
     get_all_page_All,
-    action_edit_setup,
-    get_setup
+    action_update_data_theme,
+    get_data_theme
 } from '../lib/constants/axios'
 class SetupPage extends Component {
     constructor (props) {
@@ -55,34 +55,45 @@ class SetupPage extends Component {
     async componentDidMount(){
         let cate_list=await get_all_category();
         let page_list=await get_all_page_All();
-        let data_setup= await get_setup();
-        if(data_setup.id!=undefined){
-            let data={
-                idN:data_setup.id,
-                icon_url:data_setup.icon,
-                logo_url:data_setup.logo,
-                code_contacts:data_setup.contact_code=='null'?{code_source:'',code_value:[],}:JSON.parse(data_setup.contact_code),
-                code_header:data_setup.header_code,
-                code_body:data_setup.body_code,
-                code_footer:data_setup.footer_code,
-                css_code:data_setup.css_code,
-                // code_function:''
-                value_1:data_setup.value_1=='null'?null:JSON.parse(data_setup.value_1),
-                value_2:data_setup.value_2 ,
-                value_3:data_setup.value_3 ,
-                value_4:data_setup.value_4 ,
-                value_5:data_setup.value_5 ,
-                value_6:data_setup.value_6 ,
-                value_7:data_setup.value_7 ,
-                value_8:data_setup.value_8 ,
-            };
-            let treeData=data_setup.menu_json=='null'?[]:JSON.parse(data_setup.menu_json);
+        let data_setup=await get_data_theme({keyz:'data_setup'})
+        if(data_setup!='null'){
+            try{
+                let data={
+                    idN:data_setup.idN,
+                    icon_url:data_setup.icon,
+                    logo_url:data_setup.logo,
+                    code_contacts:data_setup.contact_code==undefined?{code_source:'',code_value:[],}:JSON.parse(data_setup.contact_code),
+                    code_header:data_setup.header_code,
+                    code_body:data_setup.body_code,
+                    code_footer:data_setup.footer_code,
+                    css_code:data_setup.css_code,
+                    value_1:data_setup.value_1==undefined?null:JSON.parse(data_setup.value_1),
+                    value_2:data_setup.value_2 ,
+                    value_3:data_setup.value_3 ,
+                    value_4:data_setup.value_4 ,
+                    value_5:data_setup.value_5 ,
+                    value_6:data_setup.value_6 ,
+                    value_7:data_setup.value_7 ,
+                    value_8:data_setup.value_8 ,
+                };
+                let treeData=data_setup.menu_json==undefined?[]:JSON.parse(data_setup.menu_json);
+                    this.setState({
+                        category_list:cate_list,
+                        page_list:page_list,
+                        treeData:treeData,
+                        data:data
+                    })
+            }catch(e){
                 this.setState({
                     category_list:cate_list,
                     page_list:page_list,
-                    treeData:treeData,
-                    data:data
                 })
+            }
+        }else{
+            this.setState({
+                category_list:cate_list,
+                page_list:page_list,
+            })
         }
 
     }
@@ -523,9 +534,9 @@ class SetupPage extends Component {
             </React.Fragment>
         )
     }
+
     click_action_update=async()=>{
         let {treeData,data} =this.state;
-        // console.log("🚀 ~ file: SetupPage.js ~ line 478 ~ SetupPage ~ data", data)
         let data_convert={
             idN:data.idN,
             icon:data.icon_url,
@@ -547,14 +558,17 @@ class SetupPage extends Component {
             value_7:data.value_7==undefined?'': data.value_7 ,
             value_8:data.value_8==undefined?'': data.value_8 ,
         }
-        console.log("🚀 ~ file: SetupPage.js ~ line 525 ~ SetupPage ~ click_action_update=async ~ data_convert", data_convert)
-        let a= await action_edit_setup(data_convert)
-        if(a){
+        let z=await action_update_data_theme({
+            keyz:'data_setup',
+            valuez:JSON.stringify(data_convert)
+        })
+        if(z){
             toast.success(lang.SUCC_POST_EDIT,{theme: "colored"});
         }else{
             toast.error(lang.ERRO_POST_EDIT,{theme: "colored"});
         }
     }
+
     // convert treeData => html menu [todo=>]
     convert_menu_html=(treeData)=>{
         let result='';

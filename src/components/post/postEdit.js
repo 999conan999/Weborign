@@ -143,7 +143,7 @@ class PostEdit extends Component {
                     show_see_more:show_see_more,
                     selected_category_id:-1
                 })
-        },1000)
+        },350)
    
     }
     // selected category

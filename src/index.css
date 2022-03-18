@@ -165,6 +165,7 @@ code {
   width: 50%;
   display: inline-block;
   margin-left: 5px;
+  position: relative;
 }
 .delez{
   position: absolute;
@@ -355,4 +356,55 @@ code {
   position: absolute;
   top: 0px;
   right: 4px;
+}
+.inputK{
+  display: inline-block;
+  margin-left: 5px;
+  width: 80%;
+}
+.jhg{
+  display: inline-block;
+  width: 15%;
+  margin-right: 20px;
+}
+.jhv{
+  display: inline-block;
+  width: 30%;
+  margin-right: 20px;
+  position: relative;
+}
+.oii{
+  min-width: 124px;
+  display: inline-block;
+}
+.nhnh{
+  padding-bottom: 200px !important;
+}
+.jhgz{
+  display: inline-block;
+  width: 40%;
+  margin-right: 20px;
+  position: relative;
+}
+.pop{
+  position: absolute;
+  top: 20px;
+  right: -35px;
+  color: #df8b8b;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.pop:hover{
+  color: red;
+}
+.popz{
+  position: absolute;
+    top: 15px;
+    right: 6px;
+    color: #df8b8b;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.popz:hover{
+  color: red;
 }
