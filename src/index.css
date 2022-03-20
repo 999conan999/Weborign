@@ -408,3 +408,17 @@ code {
 .popz:hover{
   color: red;
 }
+.ghhg{
+  display: inline-block;
+  width: 15%;
+}
+.ghu{
+  float:left ;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0px;
+}
+.ghu:hover{
+  color: #a93636;
+  text-decoration: underline;
+}

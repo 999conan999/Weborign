@@ -3,10 +3,15 @@ import React, { Component } from 'react';
 import * as lang from '../lib/constants/language';
 import { toast } from 'react-toastify';
 import { Button,Segment,Input,Dropdown,Radio, Form, TextArea,} from 'semantic-ui-react';
-import {fs_convert_html_video} from '../lib/constants/fs'
+import {
+    fs_convert_html_video,
+    fs_return_arr_post_save
+} from '../lib/constants/fs'
 import {
     get_posts_by_search,
-    get_cate_tag
+    get_cate_tag,
+    action_update_data_theme,
+    get_data_theme
 } from '../lib/constants/axios'
 
 class Home extends Component {
@@ -72,9 +77,12 @@ class Home extends Component {
     // return img
  async componentDidMount(){
     let data=await get_cate_tag();
-    if(data!=null){
+    let data_setup=await get_data_theme({keyz:'home_setup'});
+    if(data!='null'&&data_setup!='null'){
         this.setState({
-         categorys_list: data.categorys_list
+         categorys_list: data.categorys_list,
+         data:data_setup,
+         data_return_query_search:data_setup.list_post_arr_save==undefined?[]:data_setup.list_post_arr_save,
         })
     }
  }
@@ -108,16 +116,40 @@ class Home extends Component {
     }
  }
  //
- click_action_update=()=>{
-    let {data} =this.state;
+ click_action_update=async()=>{
+    let {data,data_return_query_search} =this.state;
     let video_html= fs_convert_html_video(data.tab_3);
     data.tab_3.video_html=video_html;
-    console.log("🚀 ~ file: Home.js ~ line 113 ~ Home ~ data", data)
-   
+    data.list_post_arr_save= fs_return_arr_post_save(data.tab_2,data.tab_5,data_return_query_search);
+    let z=await action_update_data_theme({
+        keyz:'home_setup',
+        valuez:JSON.stringify(data)
+    })
+    if(z){
+        toast.success(lang.SUCC_POST_EDIT,{theme: "colored"});
+    }else{
+        toast.error(lang.ERRO_POST_EDIT,{theme: "colored"});
+    }
  }
+ //
+ click_action_clearCache=async()=>{
+    let {data,data_return_query_search} =this.state;
+    let video_html= fs_convert_html_video(data.tab_3);
+    data.tab_3.video_html=video_html;
+    data.list_post_arr_save=[];
+    let z=await action_update_data_theme({
+        keyz:'home_setup',
+        valuez:JSON.stringify(data)
+    })
+    if(z){
+        toast.success(lang.SUCC_POST_EDIT,{theme: "colored"});
+    }else{
+        toast.error(lang.ERRO_POST_EDIT,{theme: "colored"});
+    }
+ }
+ //
     render() {
         let {data_return_query_search,data,categorys_list} =this.state;
-        // console.log("🚀 ~ file: Home.js ~ line 70 ~", data)
         return (
             <React.Fragment>
                 {/* tab_1 */}
@@ -926,6 +958,7 @@ class Home extends Component {
                 </Segment>
                 <Segment raised className='okok nhnh'>
                     <Button positive onClick={this.click_action_update} style={{float:'right',marginRight:'50%'}}>{lang.UPDATE}</Button>
+                    <a className='ghu' onClick={this.click_action_clearCache}>Clear cache</a>
                 </Segment>
             </React.Fragment>
         )

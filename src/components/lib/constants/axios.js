@@ -383,7 +383,7 @@ export async function action_update_data_theme(data){
         data_send
     )
     .then(function (response) {
-        console.log("🚀 ~ file: axios.js ~ line 89 ~ response", response.data)
+        // console.log("🚀 ~ file: axios.js ~ line 89 ~ response", response.data)
         if(response.data.status){
             return {
                 status:true,
@@ -414,7 +414,7 @@ export async function get_data_theme(data){// input {keyz:"xdfafdasd"}
         data_send
     )
     .then(function (response) {
-        console.log("🚀 ~ file: axios.js ~ line 89 ~ response", response.data)
+        // console.log("🚀 ~ file: axios.js ~ line 89 ~ response", response.data)
         return(response.data.data)
         
     })
