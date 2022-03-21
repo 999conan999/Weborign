@@ -139,6 +139,7 @@ return_image=(list_img,type_media)=>{
                             <Header as='h4'>{lang.CATEGORY_POST_PARENT}: </Header>
                             <Select  
                                 options={categorys_lists}
+                                search
                                 // defaultValue={''} 
                                 value={data_source.categorys_result}
                                 onChange={this.action_change_category}
