@@ -48,7 +48,7 @@ class SetupPage extends Component {
                 code_body:'',
                 code_footer:'',
                 css_code:'',
-                
+                website_name:''
             },
             category_list:[],
             page_list:[]
@@ -311,6 +311,25 @@ class SetupPage extends Component {
                           lang.NOTIFY_3,
                     ]} />
                 </Message>
+                <Segment raised className='okok'>
+                    <div className='wrap-bb' >
+                        <span className='oii'>{lang.NAME_SITE} :</span>
+                        <div className='inputK'>
+                            <div >
+                                <Input 
+                                    size='small' 
+                                    fluid 
+                                    value={data.website_name}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.website_name=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </Segment>
                <Segment raised className='okok'>
                     <Header as='h4' className='clh'>*{lang.ICON_WEB} </Header>
                     <p>
@@ -475,7 +494,6 @@ class SetupPage extends Component {
                         </Segment.Group>
 
                 </Segment>
-{/* footer here */}
                 <Segment raised className='okok'>
                     <Header as='h4' className='clh'>*{lang.FOOTER_PAGE_SETUP}</Header>
                     <div className='wrap-bb' >
@@ -653,9 +671,6 @@ class SetupPage extends Component {
                         </Segment>
  
                     </Segment>
-                    {/* <div style={{float:"left"}}>
-                       <a >reset</a>
-                    </div> */}
                     <div style={{float:"right"}}>
                        <Button positive onClick={this.click_action_update} >{lang.UPDATE}</Button>
                     </div>

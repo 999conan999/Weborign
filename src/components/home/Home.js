@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // import FileMedia from '../lib/fileMedia';
 import * as lang from '../lib/constants/language';
 import { toast } from 'react-toastify';
-import { Button,Segment,Input,Dropdown,Radio, Form, TextArea,} from 'semantic-ui-react';
+import { Button,Segment,Input,Dropdown,Radio, Form, TextArea,Header} from 'semantic-ui-react';
+import FileMedia from '../lib/fileMedia';
 import {
     fs_convert_html_video,
     fs_return_arr_post_save
@@ -18,10 +19,13 @@ class Home extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            open:false,
+            type_media:'',
             categorys_list:[],
             data_return_query_search:[],
             key_lock_query_search:'',
             data:{
+                thumnail_url_home:'',
                 tab_1:{
                     title_home:'',
                     descript_home:'',
@@ -70,6 +74,12 @@ class Home extends Component {
                     post_2:'',
                     cate_3:'',
                     post_3:'',
+                },
+                tab_6:{
+                    code_header_home:'',
+                    code_body_home:'',
+                    code_footer_home:'',
+                    code_css_home:''
                 }
             }
         }
@@ -148,10 +158,42 @@ class Home extends Component {
     }
  }
  //
+ return_image=(arr_img)=>{
+    let {type_media,data}=this.state;
+    if(type_media=='thumnail_home'){
+        if(arr_img.length>0){
+            data.thumnail_url_home=arr_img[0].url;
+            this.setState({
+                data:data
+            })
+        }
+    }
+ }
+ //
     render() {
         let {data_return_query_search,data,categorys_list} =this.state;
         return (
             <React.Fragment>
+                {/* thumnail home */}
+                <Segment raised className='okok'>
+                    <p>Lựa chọn ảnh đại diện cho trang chủ :</p>
+                    <div className='ghhg'>
+                        <Button basic color='blue' size='small' className='btn-mgb'
+                            onClick={()=>this.setState({open:true,type_media:'thumnail_home'})}
+                        ><i className="fas fa-photo-video vv"></i>Add Media</Button>
+                        {data.thumnail_url_home!=undefined&&data.thumnail_url_home!=''&&<div className='thum'><div className='vvv'>
+                            <img src={data.thumnail_url_home} height={'50px'}/>
+                            <i className="fa-solid fa-x xxz zzx" 
+                               onClick={()=>{
+                                   let {data}=this.state;
+                                   data.thumnail_url_home='';
+                                   this.setState({data:data})
+                               }}
+                            ></i>
+                        </div></div>}
+                        <p>640:360</p>
+                    </div>
+                </Segment>
                 {/* tab_1 */}
                 <Segment raised className='okok'>
                     <div className='wrap-bb' >
@@ -956,10 +998,72 @@ class Home extends Component {
                         </div>
                     </div>
                 </Segment>
+                <Segment raised className='xyg' >
+                    <Header as='h4' className='clh'>*{lang.ADD_CODE}</Header>
+                    <Segment raised className='okok'>
+                        <Header as='h4'>CSS home code:</Header>
+                        <Form>
+                            <TextArea placeholder='Code here.' rows={10}
+                                value={data.tab_6.code_css_home}
+                                onChange={(e,{value})=>{
+                                    let {data}=this.state;
+                                    data.tab_6.code_css_home=value;
+                                    this.setState({data:data})
+                                }}
+                            />
+                        </Form>
+                    </Segment>
+                    <Segment raised className='okok'>
+                        <Header as='h4'>Header home code:</Header>
+                        <Form>
+                            <TextArea placeholder='Code here.' rows={10}
+                                value={data.tab_6.code_header_home}
+                                onChange={(e,{value})=>{
+                                    let {data}=this.state;
+                                    data.tab_6.code_header_home=value;
+                                    this.setState({data:data})
+                                }}
+                            />
+                        </Form>
+                    </Segment>
+                    <Segment raised className='okok'>
+                        <Header as='h4'>Body home code:</Header>
+                        <Form>
+                            <TextArea placeholder='Code here.' rows={10}
+                                value={data.tab_6.code_body_home}
+                                onChange={(e,{value})=>{
+                                    let {data}=this.state;
+                                    data.tab_6.code_body_home=value;
+                                    this.setState({data:data})
+                                }}
+                            />
+                        </Form>
+                    </Segment>
+                    <Segment raised className='okok'>
+                        <Header as='h4'>Footer home code:</Header>
+                        <Form>
+                            <TextArea placeholder='Code here.' rows={10}
+                                value={data.tab_6.code_footer_home}
+                                onChange={(e,{value})=>{
+                                    let {data}=this.state;
+                                    data.tab_6.code_footer_home=value;
+                                    this.setState({data:data})
+                                }}
+                            />
+                        </Form>
+                    </Segment>
+                </Segment>
                 <Segment raised className='okok nhnh'>
                     <Button positive onClick={this.click_action_update} style={{float:'right',marginRight:'50%'}}>{lang.UPDATE}</Button>
                     <a className='ghu' onClick={this.click_action_clearCache}>Clear cache</a>
                 </Segment>
+                <FileMedia
+                    open={this.state.open}
+                    type_media={this.state.type_media}
+                    return_image={this.return_image}
+                    multi_select={false}
+                    set_open_media={(open)=>this.setState({open:open})}
+                />
             </React.Fragment>
         )
     }

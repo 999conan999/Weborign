@@ -111,3 +111,4 @@ export const FOOTER_PAGE_SETUP ='Cài đặt chân trang';
 export const NOTE_ADD_ICON ='Thêm icon vào nội dung, giúp bài viết của bạn sinh động hơn.';
 export const TITLE_ADD_ICON_TOOL =' Công cụ tạo icon';
 export const URL_ICON_TOOL ='http://anbinhnew.com';
+export const NAME_SITE ='Tên website của bạn';
