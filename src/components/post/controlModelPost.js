@@ -23,7 +23,6 @@ class ControlModelPost extends Component {
                 code_body:'',//meta
                 code_footer:'',//meta
                 status:'private'//
-
             },
             id_post:-1,
             categorys_list:[],
@@ -58,19 +57,20 @@ class ControlModelPost extends Component {
                 // edit post [todo=> thêm code ở đây, để convert ra data input]
                 let data_server=await get_post_infor_by_id(nextProps.id_post);
                 if(data_server!='null'){
+                    let metaA=data_server.meta_data.metaA==undefined||data_server.meta_data.metaA==''?{}:JSON.parse(data_server.meta_data.metaA);
                     let data_source={
                         id:data_server.id,
                         categorys_result:data_server.categorys_result,//
-                        template_selected:data_server.meta_data.template_selected==undefined?"":data_server.meta_data.template_selected,//meta
+                        template_selected:metaA.template_selected==undefined?"":metaA.template_selected,//meta
                         title_post:data_server.title_post,//
                         content_post:data_server.content_post,//
-                        descriptions:data_server.meta_data.descriptions==undefined?"":data_server.meta_data.descriptions,//meta
+                        descriptions:metaA.descriptions==undefined?"":metaA.descriptions,//meta
                         tags_result:data_server.tags_result,//
                         thumnail_post:data_server.thumnail_post,//
-                        schema_seo_list:data_server.meta_data.schema_seo_list==undefined?[]:JSON.parse(data_server.meta_data.schema_seo_list),//meta array=> by JSON.Stringtify
-                        code_header:data_server.meta_data.code_header==undefined?"":data_server.meta_data.code_header,//meta
-                        code_body:data_server.meta_data.code_body==undefined?"":data_server.meta_data.code_body,//meta
-                        code_footer:data_server.meta_data.code_footer==undefined?"":data_server.meta_data.code_footer,//meta
+                        schema_seo_list:metaA.schema_seo_list==undefined?[]:JSON.parse(metaA.schema_seo_list),//meta array=> by JSON.Stringtify
+                        code_header:metaA.code_header==undefined?"":metaA.code_header,//meta
+                        code_body:metaA.code_body==undefined?"":metaA.code_body,//meta
+                        code_footer:metaA.code_footer==undefined?"":metaA.code_footer,//meta
                         status:data_server.status//
                     };
                     this.setState({
@@ -139,8 +139,7 @@ class ControlModelPost extends Component {
         })
     }
     action_add_tags=(value)=>{
-        let {data_source}=this.state;
-        let tags_all=data_source.tags_all;
+        let {tags_all}=this.state;
         let is_add_ok=true;
         tags_all.forEach(e => {
             if(e.name==value) is_add_ok=false;
@@ -151,9 +150,8 @@ class ControlModelPost extends Component {
                 text:value,
                 value:value
             });
-            data_source.tags_all=tags_all;
             this.setState({
-                data_source:data_source
+                tags_all:tags_all
             })
         }
 
@@ -294,15 +292,19 @@ click_action_no=()=>{
             tagA:data_source.tags_result,
             thumnailS:data_source.thumnail_post,
             metaA:{
-                code_body:data_source.code_body,
-                code_footer:data_source.code_footer,
-                code_header:data_source.code_header,
-                descriptions:data_source.descriptions,
-                schema_seo_list:JSON.stringify(data_source.schema_seo_list),
-                schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
-                template_selected:data_source.template_selected
+                metaA:JSON.stringify({ // bien chung, gop bien o day
+                    code_body:data_source.code_body,
+                    code_footer:data_source.code_footer,
+                    code_header:data_source.code_header,
+                    descriptions:data_source.descriptions,
+                    schema_seo_list:JSON.stringify(data_source.schema_seo_list),
+                    schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
+                    template_selected:data_source.template_selected
+                }),
+                // bien can tao meta rieng o day
             },
         })
+        
         if(a.status==true){
             if(data_source.id==-1){
                 this.props.add_data_new_post({

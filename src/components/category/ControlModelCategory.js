@@ -57,18 +57,19 @@ class ControlModelCategory extends Component {
                 let data_server=await get_category_infor_by_id(nextProps.id_category);
                 let data=await get_cate_tag();
                 if(data_server!='null'&&data!='null'){
+                    let metaA=data_server.metaA.metaA==undefined||data_server.metaA.metaA==''?{}:JSON.parse(data_server.metaA.metaA);
                     let data_source={
                         id:data_server.id,
                         categorys_result:data_server.categorys_result,//
-                        template_selected:data_server.metaA.template_selected==undefined?'':data_server.metaA.template_selected,//meta
+                        template_selected:metaA.template_selected==undefined?'':metaA.template_selected,//meta
                         title_post:data_server.title_post,//
                         content_post:data_server.content_post,//
-                        descriptions:data_server.metaA.descriptions==undefined?'':data_server.metaA.descriptions,//meta
+                        descriptions:metaA.descriptions==undefined?'':metaA.descriptions,//meta
                         thumnail_post:data_server.thumnail_post,//
-                        schema_seo_list:data_server.metaA.schema_seo_list==undefined?[]:JSON.parse(data_server.metaA.schema_seo_list),//meta array=> by JSON.Stringtify
-                        code_header:data_server.metaA.code_header==undefined?'':data_server.metaA.code_header,//meta
-                        code_body:data_server.metaA.code_body==undefined?'':data_server.metaA.code_body,//meta
-                        code_footer:data_server.metaA.code_footer==undefined?'':data_server.metaA.code_footer,//meta
+                        schema_seo_list:metaA.schema_seo_list==undefined?[]:JSON.parse(metaA.schema_seo_list),//meta array=> by JSON.Stringtify
+                        code_header:metaA.code_header==undefined?'':metaA.code_header,//meta
+                        code_body:metaA.code_body==undefined?'':metaA.code_body,//meta
+                        code_footer:metaA.code_footer==undefined?'':metaA.code_footer,//meta
                     }
                     this.setState({
                         data_source:data_source,
@@ -254,13 +255,17 @@ class ControlModelCategory extends Component {
             contentS:data_source.content_post,
             thumnailS:data_source.thumnail_post,
             metaA:{
-                code_body:data_source.code_body,
-                code_footer:data_source.code_footer,
-                code_header:data_source.code_header,
-                descriptions:data_source.descriptions,
-                template_selected:data_source.template_selected,
-                schema_seo_list:JSON.stringify(data_source.schema_seo_list),
-                schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
+                metaA:JSON.stringify({ // bien chung, gop bien o day
+                    code_body:data_source.code_body,
+                    code_footer:data_source.code_footer,
+                    code_header:data_source.code_header,
+                    descriptions:data_source.descriptions,
+                    template_selected:data_source.template_selected,
+                    schema_seo_list:JSON.stringify(data_source.schema_seo_list),
+                    schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
+            
+                }),
+                // bien can tao meta rieng o day
             }
         });
         if(a){// thanh cong

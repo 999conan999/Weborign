@@ -4,6 +4,7 @@ import Sortable from '../lib/sortable';
 import FileMedia from '../lib/fileMedia';
 import * as lang from '../lib/constants/language';
 import { toast } from 'react-toastify';
+import beautify from 'simply-beautiful';
 import {
     get_all_category,
     get_all_page_All,
@@ -628,6 +629,13 @@ class SetupPage extends Component {
                                         this.setState({data:data})
                                     }}
                                 />
+                                <span className='format-css'
+                                    onClick={()=>{
+                                        let {data}=this.state;
+                                        data.css_code=beautify.css(data.css_code);
+                                        this.setState({data:data})
+                                    }}
+                                >format css</span>
                             </Form>
                         </Segment>
                         <Segment raised className='okok'>

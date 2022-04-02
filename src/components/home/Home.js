@@ -4,6 +4,7 @@ import * as lang from '../lib/constants/language';
 import { toast } from 'react-toastify';
 import { Button,Segment,Input,Dropdown,Radio, Form, TextArea,Header} from 'semantic-ui-react';
 import FileMedia from '../lib/fileMedia';
+import beautify from 'simply-beautiful';
 import {
     fs_convert_html_video,
     fs_return_arr_post_save
@@ -1011,6 +1012,13 @@ class Home extends Component {
                                     this.setState({data:data})
                                 }}
                             />
+                            <span className='format-css'
+                                onClick={()=>{
+                                    let {data}=this.state;
+                                    data.tab_6.code_css_home=beautify.css(data.tab_6.code_css_home);
+                                    this.setState({data:data})
+                                }}
+                            >format css</span>
                         </Form>
                     </Segment>
                     <Segment raised className='okok'>

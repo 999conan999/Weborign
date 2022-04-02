@@ -3,6 +3,7 @@ import { Button,Segment,Input,Modal,Header,Dropdown,Radio, Form, TextArea, Accor
 import EditorWrap from './editorwrap';
 import * as lang from './constants/language';
 import FileMedia from './fileMedia';
+import Sortable from '../lib/sortable';
 import { ToastContainer, toast } from 'react-toastify';
 class ModalEditerCategory extends Component {
     constructor (props) {
@@ -12,7 +13,9 @@ class ModalEditerCategory extends Component {
             activeIndex: -1,
             open:false,
             type_media:'', // add / thum...
-            multi_select:true
+            multi_select:true,
+            data_return_query_search:[],
+            key_lock_query_search:'',
         }
     }
 handleClick = (e, titleProps) => {
@@ -36,14 +39,14 @@ show_templates=(template_list,template_selected)=>{
             if(i==selected){
                 result.push(
                     <div className='selecte' key={i}>
-                        <span>{lang.TEMPLATE} {i+1} (<a href={e.url_demo} target="_blank">{lang.DEMO}</a>)</span><br/>
+                        <span>{e.title}</span><br/>
                         <Radio toggle checked />
                     </div>
                 )
             }else{
                 result.push(
                     <div className='selecte'>
-                        <span>{lang.TEMPLATE} {i+1} (<a href={e.url_demo} target="_blank">{lang.DEMO}</a>)</span><br/>
+                        <span>{e.title}</span><br/>
                         <Radio toggle onClick={()=>this.action_change_template(i)}/>
                     </div>
                 )
@@ -128,7 +131,8 @@ return_image=(list_img,type_media)=>{
 
         return (<React.Fragment>
             <Modal
-                size={"small"}
+                // size={"small"}
+                size={"large"}
                 open={this.props.open}
             >
                 <Modal.Header className='blackw'>{id_category==-2?lang.CREATE_CATEGORY:lang.EDIT_CATEGORY} </Modal.Header>
@@ -157,7 +161,7 @@ return_image=(list_img,type_media)=>{
                                 onChange={this.action_change_title}
                             />
                         </Segment>
-                        <Segment raised className={data_source.content_post!=''?'okok':''}>
+                        {data_source.template_selected!=2&&data_source.template_selected!=1&&data_source.template_selected!=0&&<Segment raised className={data_source.content_post!=''?'okok':''}>
                             <Header as='h4'>{lang.CONTENT_CATEGORY}:</Header>
                             <Button basic color='blue' size='small' className='btn-mgb'
                                 onClick={()=>this.setState({open:true,type_media:'add_img_to_content',multi_select:true})}
@@ -167,7 +171,57 @@ return_image=(list_img,type_media)=>{
                                 action_change_content_post={this.action_change_content_post}
                                 content_post={data_source.content_post}
                             />
+                        </Segment>}
+                        {/*  */}
+                        <Segment raised className='okok'>
+                            <Header as='h4' className='clh'>*{lang.MENU_WEB} </Header>
+                            <p>
+                                {lang.NOTIFY_MENU_WEB}<a href={lang.NOTIFY_MENU_WEB_HDSD_URL}  target="_blank">{lang.NOTIFY_WEB_HDSD_TITLE}</a>
+                            </p>
+                            <Segment.Group horizontal>
+                                    <Segment raised className={'okok'}>
+                                        <div>
+                                            <p>{lang.ADD_CATEGORY}:</p>
+                                            <div className='iih'>
+                                                <div className='hhz'>
+                                                    <Dropdown
+                                                        placeholder={'Lựa chọn bài viết'}
+                                                        fluid
+                                                        search
+                                                        selection
+                                                        options={data_return_query_search}
+                                                        onSearchChange={this.search_title}
+                                                        // value={data.tab_2.post_id_1_tab_2}
+                                                        // onChange={(e,{value})=>{
+                                                        //     let {data}=this.state;
+                                                        //     data.tab_2.post_id_1_tab_2=value;
+                                                        //     this.setState({data:data})
+                                                        // }}
+                                                    />
+                                                </div>
+                                                <div className='hhv'>
+                                                    <Button icon className='add-da' onClick={this.action_add_text}>
+                                                        <i className="fa-solid fa-plus"></i>
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>                                
+                                                                     
+                                    </Segment>
+                                    <Segment raised  className={'okok'}>
+                                        {/* <Sortable
+                                            treeData={this.state.treeData}
+                                            change_treeData={(treeData)=>this.setState({treeData:treeData})}
+                                            maxDepth={2}
+                                            keyz={this.state.keyz}
+                                            value_update={this.state.value_update}
+                                        /> */}
+                                    </Segment>
+                                </Segment.Group>
+
                         </Segment>
+                        {/*  */}
                         <Segment.Group horizontal>
                 
                             <Segment raised className={data_source.descriptions!=''?'okok':''}>

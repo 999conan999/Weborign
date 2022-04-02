@@ -422,3 +422,15 @@ code {
   color: #a93636;
   text-decoration: underline;
 }
+.format-css {
+  cursor: pointer;
+  color: #FFD154;
+  background-color: #868585;
+  padding: 4px;
+  margin-top: 5px;
+  display: inline-block;
+  border-radius: 5px;
+}
+.format-css:hover{
+  background-color: #3D3D3D;
+}
