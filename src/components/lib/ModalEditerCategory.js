@@ -5,6 +5,9 @@ import * as lang from './constants/language';
 import FileMedia from './fileMedia';
 import Sortable from '../lib/sortable';
 import { ToastContainer, toast } from 'react-toastify';
+import {
+    get_posts_by_search,
+} from '../lib/constants/axios'
 class ModalEditerCategory extends Component {
     constructor (props) {
         super(props)
@@ -15,7 +18,11 @@ class ModalEditerCategory extends Component {
             type_media:'', // add / thum...
             multi_select:true,
             data_return_query_search:[],
+            keyz:0,
             key_lock_query_search:'',
+            value_post:'',
+            value_post_chose:''
+            
         }
     }
 handleClick = (e, titleProps) => {
@@ -91,7 +98,7 @@ show_schema=(schema_seo_list)=>{
 }
 //
 action_change_schema(data,i){
-this.props.action_change_schema(data.value,i);
+    this.props.action_change_schema(data.value,i);
 }
 //
 action_delete_schema(i){
@@ -120,9 +127,70 @@ return_image=(list_img,type_media)=>{
         }
     }
 }
-
+//
+search_title=(e,data)=>{
+    this.query_search(data.searchQuery);
+}   
+//
+query_search=(text)=>{
+    if(text!=''){
+        clearTimeout(this.time_seach);
+        this.time_seach=setTimeout(async()=>{
+            let {data_return_query_search,key_lock_query_search}=this.state;
+            let data_server=await get_posts_by_search(0,text);
+            let z=[]
+            data_server.forEach(e => {
+                if(key_lock_query_search.search(e.id)==-1){
+                    key_lock_query_search+=','+e.id;
+                    z.push({
+                            key:e.id,
+                            value:e.id,
+                            text:e.title
+                        })
+                }
+            });
+            this.setState({
+                data_return_query_search:[...data_return_query_search,...z],
+                key_lock_query_search:key_lock_query_search
+            })
+        },350)
+    }
+}
+//
+show_list_des=(list_des_1,type)=>{
+    let result=[];
+    if(type=="type1"){
+        list_des_1.forEach((e,i) => {
+            result.push(<div key={i} style={{position:'relative'}}><Input 
+                style={{marginBottom:'5px'}}
+                size='small' 
+                fluid 
+                placeholder={`Mô tả chức năng và ưu điểm ${i+1}`}
+                value={e}
+                onChange={(e,{value})=>this.props.change_list_des(value,i,type)}
+            />
+            <i className="fa-solid fa-trash-can rmx" onClick={()=>this.props.delete_list_des(i,type)}></i>
+            </div>)
+        });
+    }else{
+        list_des_1.forEach((e,i) => {
+            result.push(<div key={i} style={{position:'relative'}}><Input 
+                style={{marginBottom:'5px'}}
+                size='small' 
+                fluid 
+                placeholder={`Giao diện thích hợp cho ${i+1}`}
+                value={e}
+                onChange={(e,{value})=>this.props.change_list_des(value,i,type)}
+            />
+            <i className="fa-solid fa-trash-can rmx" onClick={()=>this.props.delete_list_des(i,type)}></i>
+            </div>)
+        });
+    }
+    return result;
+}
+//
     render() {
-        const { activeIndex } =  this.state;
+        const { activeIndex,data_return_query_search,value_post,keyz,value_post_chose } =  this.state;
         const {data_source,id_category,template_list,categorys_list}=this.props;
         let categorys_lists=[{key:0,value:0,text:'Không chọn'}];
         if(categorys_list!=undefined){
@@ -131,7 +199,6 @@ return_image=(list_img,type_media)=>{
 
         return (<React.Fragment>
             <Modal
-                // size={"small"}
                 size={"large"}
                 open={this.props.open}
             >
@@ -173,54 +240,98 @@ return_image=(list_img,type_media)=>{
                             />
                         </Segment>}
                         {/*  */}
-                        <Segment raised className='okok'>
-                            <Header as='h4' className='clh'>*{lang.MENU_WEB} </Header>
-                            <p>
-                                {lang.NOTIFY_MENU_WEB}<a href={lang.NOTIFY_MENU_WEB_HDSD_URL}  target="_blank">{lang.NOTIFY_WEB_HDSD_TITLE}</a>
-                            </p>
-                            <Segment.Group horizontal>
-                                    <Segment raised className={'okok'}>
-                                        <div>
-                                            <p>{lang.ADD_CATEGORY}:</p>
-                                            <div className='iih'>
-                                                <div className='hhz'>
-                                                    <Dropdown
-                                                        placeholder={'Lựa chọn bài viết'}
-                                                        fluid
-                                                        search
-                                                        selection
-                                                        options={data_return_query_search}
-                                                        onSearchChange={this.search_title}
-                                                        // value={data.tab_2.post_id_1_tab_2}
-                                                        // onChange={(e,{value})=>{
-                                                        //     let {data}=this.state;
-                                                        //     data.tab_2.post_id_1_tab_2=value;
-                                                        //     this.setState({data:data})
-                                                        // }}
-                                                    />
-                                                </div>
-                                                <div className='hhv'>
-                                                    <Button icon className='add-da' onClick={this.action_add_text}>
-                                                        <i className="fa-solid fa-plus"></i>
-                                                    </Button>
-                                                </div>
+                        {data_source.template_selected==2&&<Segment raised className='okok'>
+                            <Header as='h4' className='fgg'>*✔️ Chức năng và ưu điểm: </Header>
+                            <div>
+                                {this.show_list_des(data_source.list_des_1,'type1')}
+                            </div>
+                            <Button icon className='add-da' 
+                                onClick={()=>this.props.add_list_des('type1')}
+                            >
+                                <i className="fa-solid fa-plus"></i>
+                            </Button>
+                        </Segment>}
+                        {data_source.template_selected==2&&<Segment raised className='okok'>
+                            <Header as='h4' className='fggf'>*🚀 Giao diện thích hợp sử dụng cho: </Header>
+                            <div>
+                                {this.show_list_des(data_source.list_des_2,'type2')}
+                            </div>
+                            <Button icon className='add-da' 
+                                onClick={()=>this.props.add_list_des('type2')}
+                            >
+                                <i className="fa-solid fa-plus"></i>
+                            </Button>
+                        </Segment>}
+                        {data_source.template_selected==2&&<Segment raised className='okok'>
+                            <Header as='h4' className='clh'>*{lang.SELETECT_POST} </Header>
+                                <div className='wrap-bb' >
+                                    <span className='oii'>Tiêu đề phần hiển thị bài viết :</span>
+                                    <div className=''>
+                                        <Input 
+                                            size='small' 
+                                            fluid 
+                                            placeholder='Bài viết hướng dẫn sử dụng'
+                                            value={data_source.title_x2}
+                                            onChange={(e,{value})=>this.props.change_title_x2(value)}
+                                        />
+                                    </div>
+                                </div>
+                                <Segment  className={'okok '}>
+                                    <div>
+                                        <p>Thêm bài viết:</p>
+                                        <div className='iih'>
+                                            <div className='hhzz'>
+                                                <Dropdown
+                                                    placeholder={'Lựa chọn bài viết'}
+                                                    fluid
+                                                    search
+                                                    selection
+                                                    options={data_return_query_search}
+                                                    onSearchChange={this.search_title}
+                                                    value={value_post}
+                                                    onChange={(e,{value})=>{
+                                                        let {data_return_query_search} =this.state;
+                                                        let rs=null;
+                                                        data_return_query_search.forEach(e => {
+                                                            if(e.value==value){
+                                                                rs=e;
+                                                                rs.title=e.text
+                                                            }
+                                                        });
+                                                        this.setState({
+                                                            value_post:value,
+                                                            value_post_chose:rs
+                                                        })
+                                                    }}
+                                                />
                                             </div>
-                                            
-                                        </div>                                
-                                                                     
-                                    </Segment>
-                                    <Segment raised  className={'okok'}>
-                                        {/* <Sortable
-                                            treeData={this.state.treeData}
-                                            change_treeData={(treeData)=>this.setState({treeData:treeData})}
-                                            maxDepth={2}
-                                            keyz={this.state.keyz}
-                                            value_update={this.state.value_update}
-                                        /> */}
-                                    </Segment>
-                                </Segment.Group>
+                                            <div className='hhv'>
+                                                <Button icon className='add-da' onClick={()=>{
+                                                    let {keyz,value_post}=this.state;
+                                                    if(value_post!=''){
+                                                        this.setState({
+                                                            value_post:'',
+                                                            keyz :keyz+1
+                                                        })
+                                                    }
+                                                }}>
+                                                    <i className="fa-solid fa-plus"></i>
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                    <Sortable
+                                        treeData={data_source.treeData}
+                                        change_treeData={(treeData)=>
+                                            this.props.change_treeData(treeData)
+                                        }
+                                        maxDepth={1}
+                                        keyz={keyz}
+                                        value_update={value_post_chose}
+                                    />
+                                </Segment>
 
-                        </Segment>
+                        </Segment>}
                         {/*  */}
                         <Segment.Group horizontal>
                 

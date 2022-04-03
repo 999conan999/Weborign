@@ -112,3 +112,4 @@ export const NOTE_ADD_ICON ='Thêm icon vào nội dung, giúp bài viết của
 export const TITLE_ADD_ICON_TOOL =' Công cụ tạo icon';
 export const URL_ICON_TOOL ='http://anbinhnew.com';
 export const NAME_SITE ='Tên website của bạn';
+export const SELETECT_POST ='Lựa chọn bài viết hiển thị cho danh mục';

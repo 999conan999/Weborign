@@ -26,7 +26,11 @@ class ControlModelCategory extends Component {
                 code_header:'',//meta
                 code_body:'',//meta
                 code_footer:'',//meta
-
+                treeData:[],
+                list_des_1:[],
+                list_des_2:[],
+                title_x2:'',
+                title_x1:'',
             },
             id_category:-1,
             categorys_list:[]
@@ -49,6 +53,11 @@ class ControlModelCategory extends Component {
                     code_header:'',//meta
                     code_body:'',//meta
                     code_footer:'',//meta
+                    treeData:[],
+                    list_des_1:[],
+                    list_des_2:[],
+                    title_x2:'',
+                    title_x1:'',
     
                 }
                 this.setState({data_source:data_source});
@@ -70,6 +79,11 @@ class ControlModelCategory extends Component {
                         code_header:metaA.code_header==undefined?'':metaA.code_header,//meta
                         code_body:metaA.code_body==undefined?'':metaA.code_body,//meta
                         code_footer:metaA.code_footer==undefined?'':metaA.code_footer,//meta
+                        treeData:[],
+                        list_des_1:[],
+                        list_des_2:[],
+                        title_x2:'',
+                        title_x1:'',
                     }
                     this.setState({
                         data_source:data_source,
@@ -210,7 +224,6 @@ class ControlModelCategory extends Component {
     //
     render() {
         let {data_source,template_list,categorys_list} =this.state;
-        // console.log("🚀 ~ file: ControlModelCategory.js ~ line 228 ~ ControlModelCategory ~ render ~ data_source", data_source)
         return (
             <React.Fragment>
                 <ModalEditerCategory 
@@ -235,10 +248,57 @@ class ControlModelCategory extends Component {
                     click_action_yes={this.click_action_yes} 
                     click_action_no={this.click_action_no} 
                     id_category={this.props.id_category}
+                    change_treeData={this.change_treeData}
+                    change_title_x2={this.change_title_x2}
+                    add_list_des={this.add_list_des}
+                    change_list_des={this.change_list_des}
+                    delete_list_des={this.delete_list_des}
                 />
             </React.Fragment>
         )
     }
+//
+change_treeData=(treeData)=>{
+    let {data_source}=this.state;
+    data_source.treeData=treeData;
+    this.setState({data_source:data_source})
+}
+//
+change_list_des=(value,i,type)=>{
+    let {data_source}=this.state;
+    if(type=="type1"){
+        data_source.list_des_1[i]=value;
+    }else{
+        data_source.list_des_2[i]=value;
+    }
+    this.setState({data_source:data_source})
+}
+//
+delete_list_des=(i,type)=>{
+    let {data_source}=this.state;
+    if(type=="type1"){
+        data_source.list_des_1.splice(i,1);
+    }else{
+        data_source.list_des_2.splice(i,1);
+    }
+    this.setState({data_source:data_source})
+}
+//
+change_title_x2=(value)=>{
+    let {data_source}=this.state;
+    data_source.title_x2=value;
+    this.setState({data_source:data_source})
+}
+//
+add_list_des=(type)=>{
+    let {data_source}=this.state;
+    if(type=="type1"){
+        data_source.list_des_1.push('');
+    }else{
+        data_source.list_des_2.push('');
+    }
+    this.setState({data_source:data_source})
+}
 //
     click_action_no=()=>{
         this.props.close_model_edit()

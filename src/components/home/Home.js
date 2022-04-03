@@ -89,11 +89,19 @@ class Home extends Component {
  async componentDidMount(){
     let data=await get_cate_tag();
     let data_setup=await get_data_theme({keyz:'home_setup'});
+    let key_lock_query_search='';
+    if(data_setup.list_post_arr_save!=undefined&&data_setup.list_post_arr_save.length>0){
+        data_setup.list_post_arr_save.forEach(e => {
+            key_lock_query_search+=','+e.value;
+        });
+    }
+
     if(data!='null'&&data_setup!='null'){
         this.setState({
          categorys_list: data.categorys_list,
          data:data_setup,
          data_return_query_search:data_setup.list_post_arr_save==undefined?[]:data_setup.list_post_arr_save,
+         key_lock_query_search:key_lock_query_search
         })
     }
  }
@@ -110,7 +118,7 @@ class Home extends Component {
             let data_server=await get_posts_by_search(0,text);
             let z=[]
             data_server.forEach(e => {
-                if(key_lock_query_search.search(e.id)==-1){
+                if(key_lock_query_search.search(','+e.id)==-1){
                     key_lock_query_search+=','+e.id;
                     z.push({
                             key:e.id,
