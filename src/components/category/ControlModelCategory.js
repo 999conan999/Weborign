@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ModalEditerCategory from '../lib/ModalEditerCategory';
 import {TEMPLATE_CATEGORY} from '../lib/constants/template';
-import {fs_convert_schema_cript} from '../lib/constants/fs';
+import {fs_convert_schema_cript,fs_convert_list_des} from '../lib/constants/fs';
 import * as lang from '../lib/constants/language';
 import { toast } from 'react-toastify';
 import {
@@ -31,6 +31,9 @@ class ControlModelCategory extends Component {
                 list_des_2:[],
                 title_x2:'',
                 title_x1:'',
+                demo:'',
+                dowload:'',
+                group:''
             },
             id_category:-1,
             categorys_list:[]
@@ -58,6 +61,9 @@ class ControlModelCategory extends Component {
                     list_des_2:[],
                     title_x2:'',
                     title_x1:'',
+                    demo:'',
+                    dowload:'',
+                    group:''
     
                 }
                 this.setState({data_source:data_source});
@@ -79,11 +85,14 @@ class ControlModelCategory extends Component {
                         code_header:metaA.code_header==undefined?'':metaA.code_header,//meta
                         code_body:metaA.code_body==undefined?'':metaA.code_body,//meta
                         code_footer:metaA.code_footer==undefined?'':metaA.code_footer,//meta
-                        treeData:[],
-                        list_des_1:[],
-                        list_des_2:[],
-                        title_x2:'',
-                        title_x1:'',
+                        treeData:metaA.treeData==undefined?[]:metaA.treeData,
+                        list_des_1:metaA.list_des_1==undefined?[]:metaA.list_des_1,
+                        list_des_2:metaA.list_des_2==undefined?[]:metaA.list_des_2,
+                        title_x2:metaA.title_x2==undefined?'':metaA.title_x2,
+                        title_x1:metaA.title_x1==undefined?'':metaA.title_x1,
+                        demo:metaA.demo==undefined?'':metaA.demo,
+                        dowload:metaA.dowload==undefined?'':metaA.dowload,
+                        group:metaA.group==undefined?'':metaA.group,
                     }
                     this.setState({
                         data_source:data_source,
@@ -224,6 +233,7 @@ class ControlModelCategory extends Component {
     //
     render() {
         let {data_source,template_list,categorys_list} =this.state;
+        console.log("🚀 ~ file: ControlModelCategory.js ~ line 227 ~ ControlModelCategory ~ render ~ data_source", data_source)
         return (
             <React.Fragment>
                 <ModalEditerCategory 
@@ -250,9 +260,11 @@ class ControlModelCategory extends Component {
                     id_category={this.props.id_category}
                     change_treeData={this.change_treeData}
                     change_title_x2={this.change_title_x2}
+                    change_title_x1={this.change_title_x1}
                     add_list_des={this.add_list_des}
                     change_list_des={this.change_list_des}
                     delete_list_des={this.delete_list_des}
+                    change_link_btn={this.change_link_btn}
                 />
             </React.Fragment>
         )
@@ -274,6 +286,18 @@ change_list_des=(value,i,type)=>{
     this.setState({data_source:data_source})
 }
 //
+change_link_btn=(value,type)=>{
+    let {data_source}=this.state;
+    if(type=='demo'){
+        data_source.demo=value;
+    }else if(type=='dowload'){
+        data_source.dowload=value;
+    }else if(type=='group'){
+        data_source.group=value;
+    }
+    this.setState({data_source:data_source});
+}
+//
 delete_list_des=(i,type)=>{
     let {data_source}=this.state;
     if(type=="type1"){
@@ -281,6 +305,12 @@ delete_list_des=(i,type)=>{
     }else{
         data_source.list_des_2.splice(i,1);
     }
+    this.setState({data_source:data_source})
+}
+//
+change_title_x1=(value)=>{
+    let {data_source}=this.state;
+    data_source.title_x1=value;
     this.setState({data_source:data_source})
 }
 //
@@ -323,7 +353,16 @@ add_list_des=(type)=>{
                     template_selected:data_source.template_selected,
                     schema_seo_list:JSON.stringify(data_source.schema_seo_list),
                     schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
-            
+                    list_des_1:data_source.list_des_1,
+                    list_des_2:data_source.list_des_2,
+                    title_x1:data_source.title_x1,
+                    title_x2:data_source.title_x2,
+                    treeData:data_source.treeData,
+                    demo:data_source.demo,
+                    dowload:data_source.dowload,
+                    group:data_source.group,
+                    list_des_all_html:fs_convert_list_des(data_source.list_des_1,data_source.list_des_2),
+
                 }),
                 // bien can tao meta rieng o day
             }

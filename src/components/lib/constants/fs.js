@@ -6,6 +6,29 @@ export function fs_convert_schema_cript(arr){
     return script;
 }
 //
+export function fs_convert_list_des(list_des_1,list_des_2){
+    let list_des_1_html='';
+    if(list_des_1.length>0){
+        list_des_1_html+='<ul>'
+        list_des_1.forEach(e => {
+          list_des_1_html+='<li> <span class="crp_title">'+e+'</span>';
+        });
+        list_des_1_html+='</ul>'
+    }
+    let list_des_2_html='';
+    if(list_des_2.length>0){
+        list_des_2_html+='<ul>'
+        list_des_2.forEach(e => {
+          list_des_2_html+='<li> <span class="crp_title">'+e+'</span>';
+        });
+        list_des_2_html+='</ul>'
+    }
+    return{
+        list_des_1_html:list_des_1_html,
+        list_des_2_html:list_des_2_html
+    }
+}
+//
 export function fs_is_value_null(data){
     if(data==null||data=='null'||data==undefined||data.length==undefined||data.length==0||data=='') return true;
     return false;

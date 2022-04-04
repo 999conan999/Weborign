@@ -240,32 +240,84 @@ show_list_des=(list_des_1,type)=>{
                             />
                         </Segment>}
                         {/*  */}
+                        {data_source.template_selected==2&&<Segment.Group >
+                            <Segment raised className='okok'>
+                                <div className='wrap-bb' >
+                                    <span className='oii'>Tiêu đề phần hiển thị thông tin 1 :</span>
+                                    <div className=''>
+                                        <Input 
+                                            size='small' 
+                                            fluid 
+                                            placeholder='Bài viết hướng dẫn sử dụng'
+                                            value={data_source.title_x1}
+                                            onChange={(e,{value})=>this.props.change_title_x1(value)}
+                                        />
+                                    </div>
+                                </div>
+                                <Header as='h4' className='fgg'>*✔️ Chức năng và ưu điểm: </Header>
+                                <div>
+                                    {this.show_list_des(data_source.list_des_1,'type1')}
+                                </div>
+                                <Button icon className='add-da' 
+                                    onClick={()=>this.props.add_list_des('type1')}
+                                >
+                                    <i className="fa-solid fa-plus"></i>
+                                </Button>
+                            </Segment>
+                            <Segment raised className='okok'>
+                                <Header as='h4' className='fggf'>*🚀 Giao diện thích hợp sử dụng cho: </Header>
+                                <div>
+                                    {this.show_list_des(data_source.list_des_2,'type2')}
+                                </div>
+                                <Button icon className='add-da' 
+                                    onClick={()=>this.props.add_list_des('type2')}
+                                >
+                                    <i className="fa-solid fa-plus"></i>
+                                </Button>
+                            </Segment>
+                        </Segment.Group>}
                         {data_source.template_selected==2&&<Segment raised className='okok'>
-                            <Header as='h4' className='fgg'>*✔️ Chức năng và ưu điểm: </Header>
-                            <div>
-                                {this.show_list_des(data_source.list_des_1,'type1')}
+                            <div className='wrap-bb' >
+                                <span className='oii'>Link "Xem demo" :</span>
+                                <div className=''>
+                                    <Input 
+                                        size='small' 
+                                        fluid 
+                                        placeholder='http://'
+                                        value={data_source.demo}
+                                        onChange={(e,{value})=>this.props.change_link_btn(value,'demo')}
+                                    />
+                                </div>
                             </div>
-                            <Button icon className='add-da' 
-                                onClick={()=>this.props.add_list_des('type1')}
-                            >
-                                <i className="fa-solid fa-plus"></i>
-                            </Button>
-                        </Segment>}
-                        {data_source.template_selected==2&&<Segment raised className='okok'>
-                            <Header as='h4' className='fggf'>*🚀 Giao diện thích hợp sử dụng cho: </Header>
-                            <div>
-                                {this.show_list_des(data_source.list_des_2,'type2')}
+                            <div className='wrap-bb' >
+                                <span className='oii'>Link "Tải xuống" :</span>
+                                <div className=''>
+                                    <Input 
+                                        size='small' 
+                                        fluid 
+                                        placeholder='http://'
+                                        value={data_source.dowload}
+                                        onChange={(e,{value})=>this.props.change_link_btn(value,'dowload')}
+                                    />
+                                </div>
                             </div>
-                            <Button icon className='add-da' 
-                                onClick={()=>this.props.add_list_des('type2')}
-                            >
-                                <i className="fa-solid fa-plus"></i>
-                            </Button>
+                            <div className='wrap-bb' >
+                                <span className='oii'>Link "Tham gia group" :</span>
+                                <div className=''>
+                                    <Input 
+                                        size='small' 
+                                        fluid 
+                                        placeholder='http://'
+                                        value={data_source.group}
+                                        onChange={(e,{value})=>this.props.change_link_btn(value,'group')}
+                                    />
+                                </div>
+                            </div>
                         </Segment>}
                         {data_source.template_selected==2&&<Segment raised className='okok'>
                             <Header as='h4' className='clh'>*{lang.SELETECT_POST} </Header>
                                 <div className='wrap-bb' >
-                                    <span className='oii'>Tiêu đề phần hiển thị bài viết :</span>
+                                    <span className='oii'>Tiêu đề phần hiển thị bài viết 2:</span>
                                     <div className=''>
                                         <Input 
                                             size='small' 
