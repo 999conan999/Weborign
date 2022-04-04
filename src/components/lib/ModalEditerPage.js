@@ -104,7 +104,7 @@ return_image=(list_img,type_media)=>{
         if(list_img.length>0){
             let img_rs='';
             list_img.forEach(e => {
-                img_rs+=`<p><img src="${e.url}" alt="" width="300" height="300" /></p>`;
+                img_rs+=`<p><img src="${e.url}" class="lazyload" width="300"  /></p>`;
             });
             this.props.action_add_img_to_content(img_rs);
         }

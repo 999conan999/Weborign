@@ -36,14 +36,14 @@ show_templates=(template_list,template_selected)=>{
             if(i==selected){
                 result.push(
                     <div className='selecte' key={i}>
-                        <span>{lang.TEMPLATE} {i+1} (<a href={e.url_demo} target="_blank">{lang.DEMO}</a>)</span><br/>
+                        <span>{e.title}</span><br/>
                         <Radio toggle checked />
                     </div>
                 )
             }else{
                 result.push(
                     <div className='selecte'>
-                        <span>{lang.TEMPLATE} {i+1} (<a href={e.url_demo} target="_blank">{lang.DEMO}</a>)</span><br/>
+                        <span>{e.title}</span><br/>
                         <Radio toggle onClick={()=>this.action_change_template(i)}/>
                     </div>
                 )
@@ -113,7 +113,7 @@ return_image=(list_img,type_media)=>{
         if(list_img.length>0){
             let img_rs='';
             list_img.forEach(e => {
-                img_rs+=`<p><img src="${e.url}" alt="" width="300" height="300" /></p>`;
+                img_rs+=`<p><img src="${e.url}" class="lazyload" width="300"/></p>`;
             });
             this.props.action_add_img_to_content(img_rs);
         }

@@ -93,3 +93,38 @@ export function fs_return_arr_post_save(tab_3,tab_5,list_arr){
     });
     return result;    
 }
+//
+// export function fs_convert_ftoc(content){
+    //     let list_h2=[...content.matchAll('<h2>[^]*?</h2>')];
+    //     let muc_luc='';
+    //     if(list_h2.length>0){
+    //         muc_luc+='<div class="widget"> <div class="widget-1"> <div id="ftwp-widget-container"> <div id="ftwp-container" class="ftwp-wrap ftwp-middle-right ftwp-minimize"><button type="button" id="ftwp-trigger" class="ftwp-shape-round ftwp-border-medium" title="click To Maximize The Table Of Contents" style=""><span class="ftwp-trigger-icon ftwp-icon-number"></span></button> <nav id="ftwp-contents" class="ftwp-shape-square ftwp-border-none" style="height: auto;"> <header id="ftwp-header"> <h3 id="ftwp-header-title">MỤC LỤC BÀI VIẾT</h3> </header> <ol id="ftwp-list" class="ftwp-liststyle-decimal ftwp-effect-bounce-to-right ftwp-list-nest ftwp-strong-first ftwp-colexp ftwp-colexp-icon" style="">';
+    //         list_h2.forEach((e,i) => {
+    //             let text=removeTags(e[0]);
+    //             content=content.replace(e[0],'<h2 id="'+makeid(5)+i+'">'+text+'</h2>');
+    //             muc_luc+='<li class="ftwp-item"><a class="ftwp-anchor" href="#'+makeid(5)+i+'"><span class="ftwp-text">'+text+'</span></a></li>'
+    //         });
+    //         muc_luc+='</ol></nav></div></div></div></div>';
+    //     }
+    //     return {
+    //         content:content,
+    //         muc_luc_html:muc_luc
+    //     }
+    // }
+    // function removeTags(str) {
+    //     if ((str===null) || (str===''))
+    //         return false;
+    //     else
+    //         str = str.toString()
+    //     return str.replace( /(<([^>]+)>)/ig, '');
+    // }
+    // function makeid(length) {
+    //     var result           = '';
+    //     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    //     var charactersLength = characters.length;
+    //     for ( var i = 0; i < length; i++ ) {
+    //       result += characters.charAt(Math.floor(Math.random() * 
+    //  charactersLength));
+    //    }
+    //    return result;
+// }

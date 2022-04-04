@@ -29,7 +29,8 @@ import { Editor } from '@tinymce/tinymce-react';
                'bold italic backcolor forecolor | alignleft aligncenter ' +
                'alignright alignjustify | bullist numlist | ' +
                ' code | image| fontsizeselect | insertfile' ,
-               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+               content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+               entity_encoding : "raw"
              }}
            />
          

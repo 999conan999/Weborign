@@ -2,17 +2,17 @@ export const TEMPLATE_POST =[
     {
         id:0,
         url_demo:'http://anbinhnew.com/demo_tempalte_0',
-        title:"Danh mục hiển danh mục"
+        title:"Bài viết"
     },
     {
         id:1,
         url_demo:'http://anbinhnew.com/demo_tempalte_1',
-        title:"Danh mục hiển thị bài viết"
+        title:"Demo template hình ảnh"
     },
     {
         id:2,
         url_demo:'http://anbinhnew.com/demo_tempalte_2',
-        title:"Danh mục hiển thị template"
+        title:"Template dowload"
     },
 ];
 export const TEMPLATE_CATEGORY =[
