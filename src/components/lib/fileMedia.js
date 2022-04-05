@@ -53,13 +53,17 @@ class FileMedia extends Component {
           }
         });
         result.push(<div className={`wp-img ${is_selecte?'check-img':''}`} key={i}>
-          <img style={{width:"80px"}} src={e.url} 
+          <img style={{width:"80px",maxHeight:"60px"}} src={e.url} 
             onClick={()=>this.action_click_img(e,multi_select)}
           />
           <div className={` delez ${is_selecte?'show':''}`}>
           <i className={`fa-solid fa-circle-xmark`}
             onClick={()=>this.action_delete_img(e)}
-          ></i></div>
+          ></i>
+          <a target="_blank" href={e.url}>
+            <i class="fa-solid fa-eye hui" ></i>
+          </a>
+          </div>
         </div>)
       });
       return result;
