@@ -22,7 +22,19 @@ class ControlModelPost extends Component {
                 code_header:'',//meta
                 code_body:'',//meta
                 code_footer:'',//meta
-                status:'private'//
+                status:'private',//,
+                data_demo:[
+                    {
+                        name:"Trang chủ",
+                        mobile:'http://localhost/test/wp-content/uploads/2022/04/3.png',
+                        desktop:'http://localhost/test/wp-content/uploads/2022/04/1.png'
+                    },
+                    {
+                        name:"Trang danh mục sản phẩm",
+                        mobile:'http://localhost/test/wp-content/uploads/2022/04/5.png',
+                        desktop:'http://localhost/test/wp-content/uploads/2022/04/4.png'
+                    },
+                    ]
             },
             id_post:-1,
             categorys_list:[],
@@ -47,7 +59,8 @@ class ControlModelPost extends Component {
                 code_header:'',//meta
                 code_body:'',//meta
                 code_footer:'',//meta
-                status:'private'//
+                status:'private',//
+                data_demo:[]
                 };
                 this.setState({
                     data_source:data_source,
@@ -71,7 +84,8 @@ class ControlModelPost extends Component {
                         code_header:metaA.code_header==undefined?"":metaA.code_header,//meta
                         code_body:metaA.code_body==undefined?"":metaA.code_body,//meta
                         code_footer:metaA.code_footer==undefined?"":metaA.code_footer,//meta
-                        status:data_server.status//
+                        status:data_server.status,//
+                        data_demo:metaA.data_demo==undefined?[]:metaA.data_demo
                     };
                     this.setState({
                         data_source:data_source
@@ -265,14 +279,45 @@ class ControlModelPost extends Component {
                     action_add_img_thumnail={this.action_add_img_thumnail} 
                     action_change_status={this.action_change_status} 
                     delete_img_thumnail={this.delete_img_thumnail} 
+                    delete_e_data_demo={this.delete_e_data_demo} 
+                    add_data_demo={this.add_data_demo} 
                     click_action_yes={this.click_action_yes} 
                     click_action_no={this.click_action_no} 
+                    change_demo={this.change_demo} 
                     id_post={this.props.id_post}
                     permission_type={this.props.permission_type}
                 />
             </React.Fragment>
         )
     }
+//
+change_demo=(type,i,value)=>{
+    let {data_source}=this.state;
+    if(type=="name"){
+        data_source.data_demo[i].name=value;
+    }else if(type=="desktop"){
+        data_source.data_demo[i].desktop=value;
+    }else if(type=="mobile"){
+        data_source.data_demo[i].mobile=value;
+    }      
+    this.setState({data_source:data_source})
+}
+//
+delete_e_data_demo=(i)=>{
+    let{data_source}=this.state;
+    data_source.data_demo.splice(i,1);
+    this.setState({data_source:data_source})
+}
+//
+add_data_demo=()=>{
+    let{data_source}=this.state;
+    data_source.data_demo.push({
+        name:'',
+        desktop:'',
+        mobile:''
+    })
+    this.setState({data_source:data_source})
+}
 //
 click_action_no=()=>{
     this.props.close_model_edit()
@@ -299,7 +344,8 @@ click_action_no=()=>{
                     descriptions:data_source.descriptions,
                     schema_seo_list:JSON.stringify(data_source.schema_seo_list),
                     schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
-                    template_selected:data_source.template_selected
+                    template_selected:data_source.template_selected,
+                    data_demo:data_source.data_demo
                 }),
                 // bien can tao meta rieng o day
             },

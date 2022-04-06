@@ -81,6 +81,45 @@ code {
   font-size: 19px;
   color: green;
 }
+.iui{
+  margin-bottom: 5px;
+  display: inline-block;
+  width: 30%;
+  margin-left: 5px;
+}
+.fgf{
+  position: absolute;
+  left: 127px;
+  top: 19px;
+}
+.fgf:hover{
+  color:#c22929;
+  cursor: pointer;
+}
+.kook{
+  padding: 5px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.kook:hover{
+  color: #a93636;
+}
+.tyu{
+  /* position: relative; */
+  overflow: hidden;
+  height: 39px;
+  overflow: hidden;
+  line-height: 20px;
+  font-size: 15px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.gh{
+  position: relative;
+}
 .cds{
   margin-right: 5px;
 }

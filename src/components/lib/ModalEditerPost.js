@@ -8,6 +8,8 @@ class ModalEditerPost extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            i:'',
+            mo_des:'',
             data_content:"",
             activeIndex: -1,
             open:false,
@@ -106,6 +108,50 @@ action_delete_schema(i){
 action_change_code_header=(e,data)=>{
     this.props.action_change_code_header(data.value);
 }
+//
+show_list_data_demo=(data_demo)=>{
+    let rs=[]
+    if(data_demo.length>0){
+        data_demo.forEach((e,i) => {
+            rs.push(<Segment className='okok'><div style={{display: "flex"}}>
+            <div className="iui">
+                <div className='inli'>Thêm tiêu đề trang: </div>
+                <div className='inli gh'>
+                    <Input 
+                        placeholder='Tên trang' fluid  size='mini'
+                        value={e.name}
+                        onChange={(e,{value})=>this.props.change_demo("name",i,value)}
+                    />
+                </div>
+            </div>
+            <div className="iui">
+                <div className='inli'>Chọn hình demo Desktop: </div>
+                <div className='inli gh'>
+                    <Button basic color='blue' size='small' className='btn-mgb' onClick={()=>this.setState({open:true,type_media:'add_img_to_demo',multi_select:false,i:i,mo_des:'desktop'})}
+                    ><i className="fas fa-photo-video vv"></i>Add Media</Button>
+                           {e.desktop!=""&&<i class="fa-solid fa-circle-xmark fgf" onClick={()=>this.props.change_demo("desktop",i,'')}></i>}
+                    <div className='tyu'>
+                        {e.desktop.substring(e.desktop.indexOf('uploads')+16,e.desktop.length)}
+                    </div>
+                </div>
+            </div>
+            <div className="iui">
+                <div className='inli'>Chọn hình demo Mobile: </div>
+                <div className='inli gh'>
+                    <Button basic color='blue' size='small' className='btn-mgb' onClick={()=>this.setState({open:true,type_media:'add_img_to_demo',multi_select:false,i:i,mo_des:'mobile'})}
+                    ><i className="fas fa-photo-video vv"></i>Add Media</Button>
+                           {e.mobile!=""&&<i class="fa-solid fa-circle-xmark fgf" onClick={()=>this.props.change_demo("mobile",i,'')} ></i>}
+                    <div className='tyu'>
+                            {e.mobile.substring(e.mobile.indexOf('uploads')+16,e.mobile.length)}
+                    </div>
+                </div>
+            </div>
+            <span className='kook' onClick={()=>this.props.delete_e_data_demo(i)}>X</span>
+        </div></Segment>)
+        });
+    }
+    return rs;
+}
 // ************* Modal file media
 // return img
 return_image=(list_img,type_media)=>{
@@ -121,6 +167,11 @@ return_image=(list_img,type_media)=>{
         if(list_img.length>0){
             this.props.action_add_img_thumnail(list_img[0].url);
         }
+    }else if(type_media=='add_img_to_demo'){
+        if(list_img.length>0){
+            let {i,mo_des}=this.state;
+            this.props.change_demo(mo_des,i,list_img[0].url);
+        }
     }
 }
 //***************Status */
@@ -130,6 +181,7 @@ action_change_status=(e,data)=>{
     render() {
         const { activeIndex } =  this.state;
         const {data_source,id_post,template_list,categorys_list,tags_all}=this.props;
+        let template_selected=data_source.template_selected;
         return (<React.Fragment>
             <Modal
                 size={"large"}
@@ -152,9 +204,9 @@ action_change_status=(e,data)=>{
                                 value={data_source.categorys_result}
                             />
                         </Segment>
-                        <Segment raised  className={data_source.template_selected!=-1?'okok':''}>
+                        <Segment raised  className={template_selected!=-1?'okok':''}>
                             <Header as='h4'>{lang.TEMPLATE_POST}:</Header>
-                            {this.show_templates(template_list,data_source.template_selected)}
+                            {this.show_templates(template_list,template_selected)}
                         </Segment>
                         <Segment raised  className={data_source.title_post!=''?'okok':''}>
                             <Header as='h4'>{lang.TITLE}:</Header>
@@ -164,7 +216,20 @@ action_change_status=(e,data)=>{
                                 onChange={this.action_change_title}
                             />
                         </Segment>
-                        <Segment raised className={data_source.content_post!=''?'okok':''}>
+                        {/*  */}
+                        {template_selected==1&&<Segment.Group raised >
+                            <Segment className='okok'>
+                                <Header as='h3' className='clh'>* Thêm hình ảnh demo cho trang:</Header>
+                            </Segment>
+                            {this.show_list_data_demo(data_source.data_demo)}
+
+                            <Button icon className='add-da' style={{margin:"20px"}}
+                                onClick={this.props.add_data_demo}>
+                             <i className="fa-solid fa-plus"></i>
+                            </Button>
+                        </Segment.Group>}
+                        {/*  */}
+                        {template_selected!=1&&<Segment raised className={data_source.content_post!=''?'okok':''}>
                             <Header as='h4'>{lang.CONTENT_POST}:</Header>
                             <Button basic color='blue' size='small' className='btn-mgb'
                                 onClick={()=>this.setState({open:true,type_media:'add_img_to_content',multi_select:true})}
@@ -174,7 +239,7 @@ action_change_status=(e,data)=>{
                                 action_change_content_post={this.action_change_content_post}
                                 content_post={data_source.content_post}
                             />
-                        </Segment>
+                        </Segment>}
                         <Segment raised className={data_source.descriptions!=''?'okok':''}>
                             <Header as='h4'>{lang.DESCRIPTION_POST}:</Header>
                             <Form>
