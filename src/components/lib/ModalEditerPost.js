@@ -217,6 +217,33 @@ action_change_status=(e,data)=>{
                             />
                         </Segment>
                         {/*  */}
+                        {template_selected==2&&<Segment.Group raised >
+                            <Segment className='okok'>
+                                <Header as='h3' className='clh'>* URL chuyến hướng đến trang dowload:</Header>
+                            </Segment>
+                            <Segment className='okok'>
+                                <div>
+                                    <span>URL:</span>
+                                    <Input 
+                                        placeholder='https://' fluid  size='small'
+                                        value={data_source.data_redirect.url}
+                                        onChange={(e,{value})=>this.props.action_change_data_redirect('url',value)}
+                                    />
+                                </div>
+                            </Segment>
+                            <Segment className='okok'>
+                                <div>
+                                    <span>Thời gian đếm ngược(giây):</span>
+                                    <Input 
+                                        type='number'
+                                        placeholder='60 ' fluid  size='small'
+                                        value={data_source.data_redirect.time}
+                                        onChange={(e,{value})=>this.props.action_change_data_redirect('time',value)}
+                                    />
+                                </div>
+                            </Segment>
+                        </Segment.Group>}
+                        {/*  */}
                         {template_selected==1&&<Segment.Group raised >
                             <Segment className='okok'>
                                 <Header as='h3' className='clh'>* Thêm hình ảnh demo cho trang:</Header>
@@ -228,7 +255,6 @@ action_change_status=(e,data)=>{
                              <i className="fa-solid fa-plus"></i>
                             </Button>
                         </Segment.Group>}
-                        {/*  */}
                         {template_selected!=1&&<Segment raised className={data_source.content_post!=''?'okok':''}>
                             <Header as='h4'>{lang.CONTENT_POST}:</Header>
                             <Button basic color='blue' size='small' className='btn-mgb'

@@ -23,18 +23,11 @@ class ControlModelPost extends Component {
                 code_body:'',//meta
                 code_footer:'',//meta
                 status:'private',//,
-                data_demo:[
-                    {
-                        name:"Trang chủ",
-                        mobile:'http://localhost/test/wp-content/uploads/2022/04/3.png',
-                        desktop:'http://localhost/test/wp-content/uploads/2022/04/1.png'
-                    },
-                    {
-                        name:"Trang danh mục sản phẩm",
-                        mobile:'http://localhost/test/wp-content/uploads/2022/04/5.png',
-                        desktop:'http://localhost/test/wp-content/uploads/2022/04/4.png'
-                    },
-                    ]
+                data_demo:[],
+                data_redirect:{
+                    url:'',
+                    time:0
+                }
             },
             id_post:-1,
             categorys_list:[],
@@ -60,7 +53,11 @@ class ControlModelPost extends Component {
                 code_body:'',//meta
                 code_footer:'',//meta
                 status:'private',//
-                data_demo:[]
+                data_demo:[],
+                data_redirect:{
+                    url:'',
+                    time:0
+                }
                 };
                 this.setState({
                     data_source:data_source,
@@ -85,7 +82,8 @@ class ControlModelPost extends Component {
                         code_body:metaA.code_body==undefined?"":metaA.code_body,//meta
                         code_footer:metaA.code_footer==undefined?"":metaA.code_footer,//meta
                         status:data_server.status,//
-                        data_demo:metaA.data_demo==undefined?[]:metaA.data_demo
+                        data_demo:metaA.data_demo==undefined?[]:metaA.data_demo,//.split("").reverse().join("")
+                        data_redirect:metaA.data_redirect==undefined?{url:'',time:0}:{url:metaA.data_redirect.url.split("").reverse().join(""),time:metaA.data_redirect.time},
                     };
                     this.setState({
                         data_source:data_source
@@ -280,6 +278,7 @@ class ControlModelPost extends Component {
                     action_change_status={this.action_change_status} 
                     delete_img_thumnail={this.delete_img_thumnail} 
                     delete_e_data_demo={this.delete_e_data_demo} 
+                    action_change_data_redirect={this.action_change_data_redirect} 
                     add_data_demo={this.add_data_demo} 
                     click_action_yes={this.click_action_yes} 
                     click_action_no={this.click_action_no} 
@@ -290,6 +289,17 @@ class ControlModelPost extends Component {
             </React.Fragment>
         )
     }
+//
+action_change_data_redirect=(type,value)=>{
+    let {data_source}=this.state;
+    if(type=="url"){
+        data_source.data_redirect.url=value;
+    }else if(type=="time" && value>0){
+        data_source.data_redirect.time=value;
+    }
+    this.setState({data_source:data_source})
+
+}
 //
 change_demo=(type,i,value)=>{
     let {data_source}=this.state;
@@ -345,7 +355,11 @@ click_action_no=()=>{
                     schema_seo_list:JSON.stringify(data_source.schema_seo_list),
                     schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
                     template_selected:data_source.template_selected,
-                    data_demo:data_source.data_demo
+                    data_demo:data_source.data_demo,
+                    data_redirect:{
+                        url:data_source.data_redirect.url.split("").reverse().join(""),
+                        time:data_source.data_redirect.time
+                    }
                 }),
                 // bien can tao meta rieng o day
             },
