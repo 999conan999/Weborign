@@ -17,7 +17,9 @@ class FileMedia extends Component {
             selected_list:[],
             show_button_more:true,
             show_more:false,
-            page:0
+            page:0,
+            open_img:false,
+            type_show:50
         }
     }
 
@@ -60,7 +62,11 @@ class FileMedia extends Component {
           <i className={`fa-solid fa-circle-xmark`}
             onClick={()=>this.action_delete_img(e)}
           ></i>
-          <a target="_blank" href={e.url}>
+          {/* <a target="_blank" href={e.url} > */}
+          <a target="_blank" onClick={()=>this.setState({
+              open_img:true,
+              data_show_img:e.url
+            })} >
             <i class="fa-solid fa-eye hui" ></i>
           </a>
           </div>
@@ -200,14 +206,15 @@ class FileMedia extends Component {
     }
 
     render() {
-        const { imgs_list,show_button_more,show_more} =  this.state;
+        const { imgs_list,show_button_more,show_more,data_show_img} =  this.state;
         const multi_select= this.props.multi_select;
         return (
+          <React.Fragment>
+           
         <Modal
             onClose={() => this.setOpen(false)}
             onOpen={() => this.setOpen(true)}
             open={this.props.open}
-            // trigger={<Button basic color='blue' size='small' className='btn-mgb'><i className="fas fa-photo-video vv"></i>Add Media</Button>}
         >
             <Modal.Header>{lang.IMAGE_MEDIA} 
             <div className='upload-btn-wrapper'>
@@ -239,6 +246,32 @@ class FileMedia extends Component {
               </Button>
             </Modal.Actions>
           </Modal>
+            {/*  */}
+              <Modal
+                size={'small'}
+                open={this.state.open_img}
+                onClose={() => this.setState({open_img:false})}
+                onOpen={()=>this.setState({open_img:true})}
+              >
+                <Modal.Content >
+                  <span onClick={()=>{
+                      navigator.clipboard.writeText(data_show_img);
+                      toast.info("Đã copy đường dẫn hình ảnh này.",{theme: "colored"})
+                  }} className="popo">{data_show_img}</span> <a target="_blank" href={data_show_img}><i class="fa-solid fa-share-from-square"></i></a>
+                  <div style={{textAlight:"center",overflow:"hidden",position:"relative",minHeight:"580px"}}>
+                    <img src={data_show_img} width="auto" className='huhui' style={{width:this.state.type_show+'%'}} />
+                    <i className="fa-solid fa-magnifying-glass-minus ruru" onClick={()=>this.setState({type_show:this.state.type_show-10})}></i>
+                    <i class="fa-solid fa-magnifying-glass-plus riri" onClick={()=>this.setState({type_show:this.state.type_show+10})}></i>
+                  </div>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button positive onClick={()=>this.setState({open_img:false})}>
+                    OK
+                  </Button>
+                </Modal.Actions>
+              </Modal>
+            {/*  */}
+          </React.Fragment>
         )
     }
     data_contents=(data_content)=>{

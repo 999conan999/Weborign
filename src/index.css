@@ -101,9 +101,48 @@ code {
   font-size: 25px;
   cursor: pointer;
 }
+.ruru{
+  position:absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 50px;
+  padding: 10px;
+  background-color: #cbc7c7d4;
+  border-radius: 10px;
+  cursor: pointer;
+  color: dimgrey;
+}
+.riri{
+  position:absolute;
+  top: 100px;
+  right: 0px;
+  font-size: 50px;
+  padding: 10px;
+  background-color: #cbc7c7d4;
+  border-radius: 10px;
+  cursor: pointer;
+  color: dimgrey;
+}
+.popo{
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+.popo:hover{
+  color: #2185d0;
+}
+.ruru:hover,.riri:hover{
+  color: brown;
+}
+.huhui{
+  display: block;
+  margin: auto;
+  width: 50%;
+}
 .kook:hover{
   color: #a93636;
 }
+.vivu{}
 .tyu{
   /* position: relative; */
   overflow: hidden;
