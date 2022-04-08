@@ -8,6 +8,7 @@ class ModalEditerPage extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            index_gia_tri:[],
             data_content:"",
             activeIndex: -1,
             open:false,
@@ -33,14 +34,14 @@ show_templates=(template_list,template_selected)=>{
             if(i==selected){
                 result.push(
                     <div className='selecte' key={i}>
-                        <span>{lang.TEMPLATE} {i+1} (<a href={e.url_demo} target="_blank">{lang.DEMO}</a>)</span><br/>
+                        <span>{e.title}</span><br/>
                         <Radio toggle checked />
                     </div>
                 )
             }else{
                 result.push(
                     <div className='selecte'>
-                        <span>{lang.TEMPLATE} {i+1} (<a href={e.url_demo} target="_blank">{lang.DEMO}</a>)</span><br/>
+                        <span>{e.title}</span><br/>
                         <Radio toggle onClick={()=>this.action_change_template(i)}/>
                     </div>
                 )
@@ -112,16 +113,95 @@ return_image=(list_img,type_media)=>{
         if(list_img.length>0){
             this.props.action_add_img_thumnail(list_img[0].url);
         }
+    }else if(type_media=='add_img_to_gia_tri'){
+        let {index_gia_tri}=this.state;
+        if(list_img.length>0){
+            this.props.change_code_lien_he('gia_tri',list_img[0].url,index_gia_tri[0],index_gia_tri[1]);
+        }
     }
 }
 //***************Status */
 action_change_status=(e,data)=>{
     this.props.action_change_status(data.value);
 }
+//************** */
+show_contact_code_input=(data)=>{
+    let rs=[];
+    data.forEach((e,i)=> {
+        rs.push(
+            <div className='kioi' key={i}>
+                <div style={{display: 'flex'}}>
+                    <div className='leftZ'>
+                        <p>Code liên hệ {i+1}: </p>
+                        <Form>
+                            <TextArea placeholder=''
+                                value={e.code}
+                                onChange={(e,{value})=>this.props.change_code_lien_he('code',value,i,false)}
+                            />
+                        </Form>
+                    </div>
+                    <div className='rightZ'>
+                        <div>
+                            <p>Url cần chuyển hướng :</p>
+                            <Input 
+                                placeholder='https://' fluid  size='mini'
+                                value={e.data_dowload.url}
+                                onChange={(e,{value})=>this.props.change_code_lien_he('url',value,i,false)}
+                            />
+                        </div>
+                        <div>
+                            <p>Mã code :</p>
+                            <Input 
+                                placeholder='ACBS243' fluid  size='mini'
+                                value={e.data_dowload.ma_code}
+                                onChange={(e,{value})=>this.props.change_code_lien_he('ma_code',value,i,false)}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className='lolo'>
+                    {this.show_gia_tri(e.gia_tri,i)}
+
+                    <Button icon className='add-da' 
+                        onClick={(e,{value})=>this.props.change_code_lien_he('add_gia_tri',false,i,false)}
+                    >
+                        <i className="fa-solid fa-plus"></i>
+                    </Button>
+                </div>
+                <span class="oiuu" onClick={()=>this.props.action_add_code_lien_he("delete",i)} >X</span>
+            </div>
+        )
+    });
+    return rs;
+}
+//
+show_gia_tri=(gia_tri,i)=>{
+    let rr=[];
+    gia_tri.forEach((c,k) => {
+        rr.push(<div key={k}>
+            <div className='buz1'>{`giá trị ${k}`} :</div>
+            <div className='buz2'>
+                <Input 
+                    placeholder={`giá trị ${k}`} fluid  size='small'
+                    value={c}
+                    onChange={(e,{value})=>this.props.change_code_lien_he('gia_tri',value,i,k)}
+                />
+            </div>
+            <div className='buz3'>
+                <Button basic color='blue' size='small' className='btn-mgb'
+                    onClick={()=>this.setState({open:true,type_media:'add_img_to_gia_tri',multi_select:false,index_gia_tri:[i,k]})}
+                ><i className="fas fa-photo-video vv"></i>Add Media</Button>
+                {c.search("http")>-1&&<img src={c} width="40px" height="40px"  className='jiji'/>}
+                <span class="oiu"  onClick={( )=>this.props.change_code_lien_he('delete_gia_tri','false',i,k)}>X</span>
+            </div>
+        </div>)
+    });
+    return rr;
+}
     render() {
         const { activeIndex } =  this.state;
         const {data_source,id_page,template_list}=this.props;
-
+        
         return (<React.Fragment>
             <Modal
                 size={"large"}
@@ -143,6 +223,16 @@ action_change_status=(e,data)=>{
                                 onChange={this.action_change_title}
                             />
                         </Segment>
+                        {data_source.template_selected==1&&<Segment raised className={data_source.content_post!=''?'okok':''}>
+                            <Header as='h4'>Share Code liên hệ ở đây:</Header>
+
+                            {this.show_contact_code_input(data_source.data_lien_he)}
+                            <Button icon className='add-da' 
+                                onClick={()=>this.props.action_add_code_lien_he("add",false)}
+                            >
+                                <i className="fa-solid fa-plus"></i>
+                            </Button>
+                        </Segment>}
                         <Segment raised className={data_source.content_post!=''?'okok':''}>
                             <Header as='h4'>{lang.CONTENT_POST}:</Header>
                             <Button basic color='blue' size='small' className='btn-mgb'
@@ -161,7 +251,6 @@ action_change_status=(e,data)=>{
                                     value={data_source.descriptions}
                                     onChange={this.action_change_descriptions}
                                 />
-                               
                             </Form>
                         </Segment>
                         <Segment.Group horizontal>

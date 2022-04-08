@@ -142,7 +142,6 @@ code {
 .kook:hover{
   color: #a93636;
 }
-.vivu{}
 .tyu{
   /* position: relative; */
   overflow: hidden;
@@ -537,4 +536,60 @@ code {
 }
 .format-css:hover{
   background-color: #3D3D3D;
+}
+.leftZ{
+  width: 60%;
+  display: inline-block;
+  padding-right: 10px;
+}
+.rightZ{
+  width: 40%;
+  display: inline-block;
+}
+.buz1{
+  display: inline-block;
+  width: 10%;
+}
+.buz2{
+  display: inline-block;
+  width: 50%;
+  padding-right: 5px;
+}
+.buz3{
+  display: inline-block;
+  width: 40%;
+  position: relative;
+}
+.lolo{
+  padding: 15px;
+}
+.kioi{
+  background-color: #b5aeae;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  position: relative;
+}
+.jiji{
+  position: absolute;
+  top: -5px;
+}
+.oiu{
+  position: absolute;
+  top: -5px;
+  left: 200px;
+  font-size: 25px;
+  padding: 5px 5px;
+  cursor: pointer;  
+}
+.oiuu{
+  position: absolute;
+  top: -5px;
+  right: 0px;
+  font-size: 25px;
+  padding: 5px 5px;
+  cursor: pointer;  
+}
+.oiu:hover,.oiuu:hover{
+  background-color: #91717cba;
 }
