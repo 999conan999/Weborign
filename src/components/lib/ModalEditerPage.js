@@ -118,6 +118,11 @@ return_image=(list_img,type_media)=>{
         if(list_img.length>0){
             this.props.change_code_lien_he('gia_tri',list_img[0].url,index_gia_tri[0],index_gia_tri[1]);
         }
+    }else if(type_media=='add_img_to_title'){
+        let {index_gia_tri}=this.state;
+        if(list_img.length>0){
+            this.props.change_code_lien_he('img_title',list_img[0].url,index_gia_tri[0],index_gia_tri[1]);
+        }
     }
 }
 //***************Status */
@@ -130,6 +135,28 @@ show_contact_code_input=(data)=>{
     data.forEach((e,i)=> {
         rs.push(
             <div className='kioi' key={i}>
+                <div className='d-flex'>
+                    <div className='d-flex titlez'>
+                        <div style={{width:"15%",marginTop:"5px"}}> Tiêu đề: </div>
+                        <div style={{width:"80%"}}>
+                            <Input 
+                                placeholder='tiêu đề' fluid  size='mini'
+                                value={e.title}
+                                onChange={(e,{value})=>this.props.change_code_lien_he('title',value,i,false)}
+                            />
+                        </div>
+                    </div>
+                    <div className='d-flex imgz'>
+                        <div>
+                            <Button basic color='blue' size='small' className='btn-mgb'
+                                onClick={()=>this.setState({open:true,type_media:'add_img_to_title',multi_select:false,index_gia_tri:[i,false]})}
+                            ><i className="fas fa-photo-video vv"></i>Add Media</Button>
+                        </div>
+                        <div style={{padingLeft:"5px"}}>
+                           <img src={e.img_title} width="auto" height="30px" />
+                        </div>
+                    </div>
+                </div>
                 <div style={{display: 'flex'}}>
                     <div className='leftZ'>
                         <p>Code liên hệ {i+1}: </p>
@@ -201,6 +228,7 @@ show_gia_tri=(gia_tri,i)=>{
     render() {
         const { activeIndex } =  this.state;
         const {data_source,id_page,template_list}=this.props;
+        // console.log("🚀 ~ file: ModalEditerPage.js ~ line 231 ~ ModalEditerPage ~ render ~ ", data_source.data_lien_he)
         
         return (<React.Fragment>
             <Modal

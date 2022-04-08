@@ -593,3 +593,13 @@ code {
 .oiu:hover,.oiuu:hover{
   background-color: #91717cba;
 }
+.d-flex{
+  display: flex;
+  margin-top: 5px;
+}
+.titlez{
+  width: 50%;
+}
+.imgz{
+  width: 50%;
+}

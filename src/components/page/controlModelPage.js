@@ -266,6 +266,10 @@ change_code_lien_he=(type,value,i,k)=>{
         value_data_lien_he.gia_tri.push('');
     }else if(type=='delete_gia_tri'){
         value_data_lien_he.gia_tri.splice(k,1);
+    }else if(type=='title'){
+        value_data_lien_he.title=value;
+    }else if(type=='img_title'){
+        value_data_lien_he.img_title=value;
     }
 
     data_source.data_lien_he[i]=value_data_lien_he;
