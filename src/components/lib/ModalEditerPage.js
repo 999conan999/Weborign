@@ -113,12 +113,14 @@ return_image=(list_img,type_media)=>{
         if(list_img.length>0){
             this.props.action_add_img_thumnail(list_img[0].url);
         }
-    }else if(type_media=='add_img_to_gia_tri'){
-        let {index_gia_tri}=this.state;
-        if(list_img.length>0){
-            this.props.change_code_lien_he('gia_tri',list_img[0].url,index_gia_tri[0],index_gia_tri[1]);
-        }
-    }else if(type_media=='add_img_to_title'){
+    }
+    // else if(type_media=='add_img_to_gia_tri'){
+    //     let {index_gia_tri}=this.state;
+    //     if(list_img.length>0){
+    //         this.props.change_code_lien_he('gia_tri',list_img[0].url,index_gia_tri[0],index_gia_tri[1]);
+    //     }
+    // }
+    else if(type_media=='add_img_to_title'){
         let {index_gia_tri}=this.state;
         if(list_img.length>0){
             this.props.change_code_lien_he('img_title',list_img[0].url,index_gia_tri[0],index_gia_tri[1]);
@@ -215,10 +217,10 @@ show_gia_tri=(gia_tri,i)=>{
                 />
             </div>
             <div className='buz3'>
-                <Button basic color='blue' size='small' className='btn-mgb'
+                {/* <Button basic color='blue' size='small' className='btn-mgb'
                     onClick={()=>this.setState({open:true,type_media:'add_img_to_gia_tri',multi_select:false,index_gia_tri:[i,k]})}
                 ><i className="fas fa-photo-video vv"></i>Add Media</Button>
-                {c.search("http")>-1&&<img src={c} width="40px" height="40px"  className='jiji'/>}
+                {c.search("http")>-1&&<img src={c} width="40px" height="40px"  className='jiji'/>} */}
                 <span class="oiu"  onClick={( )=>this.props.change_code_lien_he('delete_gia_tri','false',i,k)}>X</span>
             </div>
         </div>)
