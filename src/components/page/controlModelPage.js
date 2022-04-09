@@ -25,7 +25,11 @@ class ControlModelPage extends Component {
                 code_body:'',// meta
                 code_footer:'',// meta
                 status:'publish',//
-                data_lien_he:[]
+                data_lien_he:[],
+                data_redirect_code:{
+                    time:0,
+                    list_code:[]
+                }
             },
             id_page:-1
         }
@@ -47,7 +51,11 @@ class ControlModelPage extends Component {
                     code_body:'',// meta
                     code_footer:'',// meta
                     status:'private',//
-                    data_lien_he:[ ]
+                    data_lien_he:[],
+                    data_redirect_code:{
+                        time:0,
+                        list_code:[]
+                    }
                 };
                 this.setState({
                     data_source:data_source
@@ -69,7 +77,8 @@ class ControlModelPage extends Component {
                         code_body:metaA.code_body==undefined?"":metaA.code_body,// meta
                         code_footer:metaA.code_footer==undefined?"":metaA.code_footer,// meta
                         status:data_server.status,
-                        data_lien_he:metaA.data_lien_he==undefined?[]:metaA.data_lien_he
+                        data_lien_he:metaA.data_lien_he==undefined?[]:metaA.data_lien_he,
+                        data_redirect_code:metaA.data_redirect_code==undefined?{time:0,list_code:[]}:metaA.data_redirect_code,
                     };
                     this.setState({
                         data_source:data_source
@@ -226,6 +235,7 @@ class ControlModelPage extends Component {
                     delete_img_thumnail={this.delete_img_thumnail} 
                     change_code_lien_he={this.change_code_lien_he} 
                     action_add_code_lien_he={this.action_add_code_lien_he} 
+                    change_data_redirect_code={this.change_data_redirect_code} 
                     click_action_yes={this.click_action_yes} 
                     click_action_no={this.click_action_no} 
                     id_page={this.props.id_page}
@@ -233,6 +243,22 @@ class ControlModelPage extends Component {
             </React.Fragment>
         )
     }
+//
+change_data_redirect_code=(type,value,i)=>{
+    let {data_source}=this.state;
+    if(type=='time'){
+        data_source.data_redirect_code.time=value;
+    }else if(type=='url'){
+        data_source.data_redirect_code.list_code[i].url=value;
+    }else if(type=='ma_code'){
+        data_source.data_redirect_code.list_code[i].ma_code=value;
+    }else if(type=='delete_list_code'){
+        data_source.data_redirect_code.list_code.splice(i,1);
+    }else if(type=='add'){
+        data_source.data_redirect_code.list_code.push({url:'',ma_code:''});
+    }
+    this.setState({data_source:data_source})
+}
 //
 action_add_code_lien_he=(type,i)=>{
     let {data_source}=this.state;
@@ -299,7 +325,8 @@ click_action_yes=async()=>{
                 template_selected:data_source.template_selected,
                 schema_seo_list:JSON.stringify(data_source.schema_seo_list),
                 schema_seo_result:fs_convert_schema_cript(data_source.schema_seo_list),
-                data_lien_he:data_source.data_lien_he
+                data_lien_he:data_source.data_lien_he,
+                data_redirect_code:data_source.data_redirect_code
             }),
             // bien can tao meta rieng o day
         }

@@ -94,6 +94,16 @@ export function fs_return_arr_post_save(tab_3,tab_5,list_arr){
     return result;    
 }
 //
+export function create_random_text(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
 // export function fs_convert_ftoc(content){
     //     let list_h2=[...content.matchAll('<h2>[^]*?</h2>')];
     //     let muc_luc='';

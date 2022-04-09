@@ -590,16 +590,33 @@ code {
   padding: 5px 5px;
   cursor: pointer;  
 }
-.oiu:hover,.oiuu:hover{
+.oiu:hover,.oiuu:hover,.uyt:hover{
   background-color: #91717cba;
 }
 .d-flex{
   display: flex;
   margin-top: 5px;
+  position: relative;
 }
 .titlez{
   width: 50%;
 }
 .imgz{
   width: 50%;
+}
+.ghgu{
+  color:royalblue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.ghgu:hover{
+  color: black;
+}
+.uyt{
+  position: absolute;
+  top:-5px;
+  right: 0px;
+  font-size: 25px;
+  padding: 5px 5px;
+  cursor: pointer; 
 }

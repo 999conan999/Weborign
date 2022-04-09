@@ -3,6 +3,7 @@ import { Button,Segment,Input,Modal,Header,Dropdown,Radio, Form, TextArea, Accor
 import EditorWrap from './editorwrap';
 import * as lang from './constants/language';
 import FileMedia from './fileMedia';
+import {create_random_text} from '../lib/constants/fs'
 import {toast } from 'react-toastify';
 class ModalEditerPage extends Component {
     constructor (props) {
@@ -171,7 +172,7 @@ show_contact_code_input=(data)=>{
                     </div>
                     <div className='rightZ'>
                         <div>
-                            <p>Url cần chuyển hướng :</p>
+                            <p>Url cần chuyển hướng (ads hoặc trang data cần share):</p>
                             <Input 
                                 placeholder='https://' fluid  size='mini'
                                 value={e.data_dowload.url}
@@ -179,7 +180,11 @@ show_contact_code_input=(data)=>{
                             />
                         </div>
                         <div>
-                            <p>Mã code :</p>
+                            <p style={{marginTop:"5px"}}>Mã code :(<span className='ghgu'
+                                onClick={()=>{
+                                    this.props.change_code_lien_he('ma_code',create_random_text(5),i,false)
+                                }}
+                            >auto create</span>)</p>
                             <Input 
                                 placeholder='ACBS243' fluid  size='mini'
                                 value={e.data_dowload.ma_code}
@@ -227,6 +232,37 @@ show_gia_tri=(gia_tri,i)=>{
     });
     return rr;
 }
+//
+show_data_redirect_code=(list_code)=>{
+console.log("🚀 ~ file: ModalEditerPage.js ~ line 237 ~ ModalEditerPage ~ {c.search ~ list_code", list_code)
+    let rs=[];
+    if(list_code!=undefined){
+        list_code.forEach((e,i) => {
+            rs.push(<div className='d-flex' key={i}>
+                <div className='rightZ kioi' style={{display:"flex",width:'100%',marginBottom:'5px'}}>
+                    <div style={{width:"50%"}}>
+                        <p style={{marginBottom:"2px",marginTop:'10px'}}>Url cần chuyển hướng (ads hoặc trang data cần share):</p>
+                        <Input 
+                            placeholder='https://' fluid  size='mini'
+                            value={e.url}
+                            onChange={(e,{value})=>this.props.change_data_redirect_code('url',value,i)}
+                        />
+                    </div>
+                    <div style={{width:"50%"}}>
+                        <p style={{marginBottom:"2px",marginTop:'10px'}}>Mã code :</p>
+                        <Input 
+                            placeholder='ACBS243' fluid  size='mini'
+                            value={e.ma_code}
+                            onChange={(e,{value})=>this.props.change_data_redirect_code('ma_code',value,i)}
+                        />
+                    </div>
+                </div>
+                <span class="uyt" onClick={()=>this.props.change_data_redirect_code('delete_list_code',false,i)}>X</span>
+            </div>)
+        });
+    }
+    return rs;
+}
     render() {
         const { activeIndex } =  this.state;
         const {data_source,id_page,template_list}=this.props;
@@ -253,6 +289,29 @@ show_gia_tri=(gia_tri,i)=>{
                                 onChange={this.action_change_title}
                             />
                         </Segment>
+                        {data_source.template_selected==2&&<Segment raised className={data_source.content_post!=''?'okok':''}>
+                            <Header as='h4'>Tạo mã và đường dẫn chuyển hướng:</Header>
+                            <div>
+                                <div>
+                                    <div style={{display:"inline"}}>Thời gian đếm ngược(s):</div>
+                                    <div style={{display:"inline-block",width:"30%", marginLeft:"5px"}}>
+                                        <Input 
+                                            fluid  size='mini'
+                                            type='number'
+                                            value={data_source.data_redirect_code.time}
+                                            onChange={(e,{value})=>this.props.change_data_redirect_code('time',value,false)}
+                                        />
+                                    </div>
+                                </div>
+
+                                {this.show_data_redirect_code(data_source.data_redirect_code.list_code)}
+                                <Button icon className='add-da' 
+                                    onClick={()=>this.props.change_data_redirect_code('add',false,false)}
+                                >
+                                    <i className="fa-solid fa-plus"></i>
+                                </Button>
+                            </div>
+                        </Segment>}
                         {data_source.template_selected==1&&<Segment raised className={data_source.content_post!=''?'okok':''}>
                             <Header as='h4'>Share Code liên hệ ở đây:</Header>
 
