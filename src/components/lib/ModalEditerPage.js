@@ -234,7 +234,6 @@ show_gia_tri=(gia_tri,i)=>{
 }
 //
 show_data_redirect_code=(list_code)=>{
-console.log("🚀 ~ file: ModalEditerPage.js ~ line 237 ~ ModalEditerPage ~ {c.search ~ list_code", list_code)
     let rs=[];
     if(list_code!=undefined){
         list_code.forEach((e,i) => {
