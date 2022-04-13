@@ -49,7 +49,25 @@ class SetupPage extends Component {
                 code_body:'',
                 code_footer:'',
                 css_code:'',
-                website_name:''
+                website_name:'',
+                add_code_posts:{
+                    code_header:'',
+                    code_body:'',
+                    code_footer:'',
+                    css_code:'',
+                },
+                add_code_pages:{
+                    code_header:'',
+                    code_body:'',
+                    code_footer:'',
+                    css_code:'',
+                },
+                add_code_cetegorys:{
+                    code_header:'',
+                    code_body:'',
+                    code_footer:'',
+                    css_code:'',
+                },
             },
             category_list:[],
             page_list:[]
@@ -62,6 +80,9 @@ class SetupPage extends Component {
         let data_setup=await get_data_theme({keyz:'data_setup'})
         if(data_setup!='null'){
             try{
+                if(data_setup.add_code_posts==undefined)data_setup.add_code_posts={code_header:'',code_body:'',code_footer:'',css_code:'',};
+                if(data_setup.add_code_pages==undefined)data_setup.add_code_pages={code_header:'',code_body:'',code_footer:'',css_code:'',};
+                if(data_setup.add_code_cetegorys==undefined)data_setup.add_code_cetegorys={code_header:'',code_body:'',code_footer:'',css_code:'',};
                 this.setState({
                     category_list:cate_list,
                     page_list:page_list,
@@ -302,6 +323,7 @@ class SetupPage extends Component {
 
     render() {
         let {data,value_category,value_page,value_custom_text,category_list,page_list}=this.state;
+
         return (
             <React.Fragment>
                 <Message  color='brown'>
@@ -614,7 +636,7 @@ class SetupPage extends Component {
                 </Segment>
 
                 <Segment raised className='xyg' >
-                        <Header as='h4' className='clh'>*{lang.ADD_CODE}</Header>
+                        <Header as='h4' className='clh'>* Phần chèn code chung cho toàn trang web</Header>
                         <p>
                             {lang.NOTIFY_ADD_CODE}<a href={lang.NOTIFY_ADD_CODE_HDSD_URL}  target="_blank">{lang.NOTIFY_WEB_HDSD_TITLE}</a>
                         </p>
@@ -678,7 +700,198 @@ class SetupPage extends Component {
                             </Form>
                         </Segment>
  
-                    </Segment>
+                </Segment>
+                {/*  */}
+                <Segment raised style={{backgroundColor:"#b8d794"}} >
+                        <Header as='h4' className='clh'>* Phần chèn code chung cho trang bài viết</Header>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>CSS code:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_posts.css_code}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_posts.css_code=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                                <span className='format-css'
+                                    onClick={()=>{
+                                        let {data}=this.state;
+                                        data.add_code_posts.css_code=beautify.css(data.add_code_posts.css_code);
+                                        this.setState({data:data})
+                                    }}
+                                >format css</span>
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Header:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_posts.code_header}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_posts.code_header=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Body:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_posts.code_body}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_posts.code_body=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Footer:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here' rows={10}
+                                     value={data.add_code_posts.code_footer}
+                                     onChange={(e,{value})=>{
+                                         let {data}=this.state;
+                                         data.add_code_posts.code_footer=value;
+                                         this.setState({data:data})
+                                     }}
+                                />
+                            </Form>
+                        </Segment>
+ 
+                </Segment>
+                <Segment raised style={{backgroundColor:"rgb(237 207 162)"}} >
+                        <Header as='h4' className='clh'>* Phần chèn code chung cho Danh mục</Header>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>CSS code:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_cetegorys.css_code}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_cetegorys.css_code=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                                <span className='format-css'
+                                    onClick={()=>{
+                                        let {data}=this.state;
+                                        data.add_code_cetegorys.css_code=beautify.css(data.add_code_cetegorys.css_code);
+                                        this.setState({data:data})
+                                    }}
+                                >format css</span>
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Header:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_cetegorys.code_header}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_cetegorys.code_header=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Body:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_cetegorys.code_body}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_cetegorys.code_body=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Footer:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here' rows={10}
+                                     value={data.add_code_cetegorys.code_footer}
+                                     onChange={(e,{value})=>{
+                                         let {data}=this.state;
+                                         data.add_code_cetegorys.code_footer=value;
+                                         this.setState({data:data})
+                                     }}
+                                />
+                            </Form>
+                        </Segment>
+ 
+                </Segment>
+                <Segment raised style={{backgroundColor:"rgb(139 184 219)"}} >
+                        <Header as='h4' className='clh'>* Phần chèn code chung cho Trang</Header>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>CSS code:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_pages.css_code}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_pages.css_code=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                                <span className='format-css'
+                                    onClick={()=>{
+                                        let {data}=this.state;
+                                        data.add_code_pages.css_code=beautify.css(data.add_code_pages.css_code);
+                                        this.setState({data:data})
+                                    }}
+                                >format css</span>
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Header:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_pages.code_header}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_pages.code_header=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Body:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here.' rows={10}
+                                    value={data.add_code_pages.code_body}
+                                    onChange={(e,{value})=>{
+                                        let {data}=this.state;
+                                        data.add_code_pages.code_body=value;
+                                        this.setState({data:data})
+                                    }}
+                                />
+                            </Form>
+                        </Segment>
+                        <Segment raised className='okok'>
+                            <Header as='h4'>Footer:</Header>
+                            <Form>
+                                <TextArea placeholder='Code here' rows={10}
+                                     value={data.add_code_pages.code_footer}
+                                     onChange={(e,{value})=>{
+                                         let {data}=this.state;
+                                         data.add_code_pages.code_footer=value;
+                                         this.setState({data:data})
+                                     }}
+                                />
+                            </Form>
+                        </Segment>
+ 
+                </Segment>
+                {/*  */}
                     <div style={{float:"right"}}>
                        <Button positive onClick={this.click_action_update} >{lang.UPDATE}</Button>
                     </div>
