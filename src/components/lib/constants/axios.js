@@ -18,6 +18,7 @@ export async function get_posts_by_category_id(page,category_id){
         let url=url_get_post_list+'?page='+page+'&category_id='+category_id;
         return await fs_axios_get(url,'ARRAY');
 }
+
 //****************************** */
 async function fs_axios_get(url,return_err){ // return_err => ARRAY ~~ OBJECT
     let data= await axios.get(url)
@@ -423,4 +424,31 @@ export async function get_data_theme(data){// input {keyz:"xdfafdasd"}
         return 'null'
     })
     return response;
+}
+// 
+const url_delete_contact='http://localhost/test/wp-content/themes/danhdev_1/templates/ajax/ipa_nimda/tcatnoc/delete.php';
+
+export async function delete_contact_by_id(id){// input {keyz:"xdfafdasd"}
+    let data_send=new FormData();
+    data_send.append('id',id);
+    //
+    let response= axios.post(url_delete_contact, 
+        data_send
+    )
+    .then(function (response) {
+        console.log("🚀 ~ file: axios.js ~ line 439 ~ response", response)
+        return(response.data)
+        
+    })
+    .catch(function (error) {
+        console.log("🚀 ~ file: axios.js ~ line 97 ~ action_create_or_edit_post ~ error", error)
+        return {status:false}
+    })
+    return response;
+}
+//
+const url_get_contacts='http://localhost/test/wp-content/themes/danhdev_1/templates/ajax/ipa_nimda/tcatnoc/tegTcatnoc.php'
+export async function get_contacts(page){
+    let url=url_get_contacts+'?page='+page;
+    return await fs_axios_get(url,'ARRAY');
 }

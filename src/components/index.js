@@ -5,7 +5,7 @@ import Home from './home/Home';
 import Media from './media/controlMedia';
 import CategoryEdit from './category/CategoryEdit';
 import SetupPage from './setup_Page/SetupPage';
-import {  Menu, Segment } from 'semantic-ui-react'
+import {  Menu, Segment,Label } from 'semantic-ui-react'
 import * as lang from './lib/constants/language';
 import 'react-toastify/dist/ReactToastify.css';
 import {alert_toast} from './lib/constants/language';
@@ -116,13 +116,13 @@ class Index extends Component {
                     onClick={()=>this.clickMenu("media")}
                 ><i className="fas fa-photo-video  menu-icon-d"></i>{lang.MEDIA}</Link>}
 
-                {/* {permission_active_contact&&<Link 
+                {permission_active_contact&&<Link 
                     to="/contacts"
                     className={`link item ${activeItem=="contacts"?"active":""}`}
                     onClick={()=>this.clickMenu("contacts")}
                 ><i class="fa-brands fa-wpforms  menu-icon-d"></i>{lang.FORM_CONTACT}
-                {notify>0&&<span className='lk'>{notify}</span>}
-                </Link>} */}
+                {notify>0&& <Label color='red' floating style={{top: '0px'}}>{notify}</Label>}
+                </Link>}
 
                 <Menu.Menu position='right'>
                     {permission_active_home&&<Link 
@@ -154,11 +154,11 @@ class Index extends Component {
                 {(permission_active_category||permission_active_home||permission_active_page||permission_active_setup||permission_active_post)&&<Route exact path="/" element={<PostEdit/>}/>}
                 {permission_active_post&&<Route exact path="/posts" element={<PostEdit permission_type={permission_type}/>}/>}
                 {permission_active_setup&&<Route exact path="/setups" element={<SetupPage/>}/>}
-                {/* {permission_active_contact&&<Route exact path="/contacts" element={<Contact 
+                {permission_active_contact&&<Route exact path="/contacts" element={<Contact 
                     notify={notify}
                     coun_contact_now={coun_contact_now}
                     clear_notify_contact={this.clear_notify_contact}
-                />}/>} */}
+                />}/>}
                 {permission_active_page&&<Route exact path="/pages" element={<PageEdit/>}/>}
                 {permission_active_media&&<Route exact path="/media" element={<Media/>}/>}
                 {permission_active_home&&<Route exact path="/home" element={<Home/>}/>}

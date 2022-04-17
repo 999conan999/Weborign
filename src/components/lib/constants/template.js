@@ -39,5 +39,9 @@ export const TEMPLATE_PAGE =[
     {
         id:2,
         title:"Trang chuyển hướng theo mã code"
+    },
+    {
+        id:3,
+        title:"Trang liên hệ"
     } 
 ];
